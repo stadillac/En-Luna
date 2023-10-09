@@ -20,7 +20,7 @@
         /// <value>
         /// The account identifier.
         /// </value>
-        public int AccountId {get;set;}
+        public string? UserId {get;set;}
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is verified.
@@ -36,6 +36,6 @@
         /// <value>
         /// The account.
         /// </value>
-        public virtual User? Account { get; set; }
+        public virtual User? User { get; set; }
     }
 }

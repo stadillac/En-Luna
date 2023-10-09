@@ -59,14 +59,6 @@ namespace En_Luna.Data.Models
         public string LastName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the username.
-        /// </summary>
-        /// <value>
-        /// The username.
-        /// </value>
-        public string Username { get; set; } = string.Empty;
-
-        /// <summary>
         /// Gets or sets the about me.
         /// </summary>
         /// <value>

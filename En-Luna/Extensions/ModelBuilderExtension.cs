@@ -126,7 +126,7 @@ namespace En_Luna.Extensions
             #region Document
 
             modelBuilder.Entity<Document>()
-                .HasOne(x => x.Account)
+                .HasOne(x => x.User)
                 .WithMany(x => x.Documents)
                 .OnDelete(DeleteBehavior.NoAction);
 

@@ -47,205 +47,205 @@ namespace En_Luna.Extensions
 
         public static void DefineRelationships(this ModelBuilder modelBuilder)
         {
-            //#region Account
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(x => x.Address)
-            //    .WithOne()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #region User
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.Address)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(x => x.Contractor)
-            //    .WithOne(x => x.Account)
-            //    .OnDelete(DeleteBehavior.NoAction)
-            //    .IsRequired();
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.Contractor)
+                .WithOne(x => x.Account)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
 
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(x => x.Solicitor)
-            //    .WithOne(x => x.Account)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.Solicitor)
+                .WithOne(x => x.Account)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(x => x.BankAccount)
-            //    .WithOne()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.BankAccount)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(x => x.CompanyType)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasOne(x => x.CompanyType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Account>()
-            //    .HasMany(x => x.ContractorReviews)
-            //    .WithOne(x => x.ContractorAccount)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.ContractorReviews)
+                .WithOne(x => x.ContractorUser)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Account>()
-            //    .HasMany(x => x.SolicitorReviews)
-            //    .WithOne(x => x.SolicitorAccount)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.SolicitorReviews)
+                .WithOne(x => x.SolicitorUser)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Address
+            #region Address
 
-            //modelBuilder.Entity<Address>()
-            //    .HasOne(x => x.State)
-            //    .WithOne()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Address>()
+                .HasOne(x => x.State)
+                .WithOne()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Contractor
+            #region Contractor
 
-            //modelBuilder.Entity<Contractor>()
-            //    .HasOne(x => x.ProfessionDiscipline)
-            //    .WithMany(x => x.Contractors)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Contractor>()
+                .HasOne(x => x.ProfessionDiscipline)
+                .WithMany(x => x.Contractors)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Contractor>()
-            //    .HasMany(x => x.Licenses)
-            //    .WithOne(x => x.Contractor)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Contractor>()
+                .HasMany(x => x.Licenses)
+                .WithOne(x => x.Contractor)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region ContractorSoftware
+            #region ContractorSoftware
 
-            //modelBuilder.Entity<ContractorSoftware>()
-            //    .HasOne(x => x.Contractor)
-            //    .WithMany(x => x.AvailableSoftware)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ContractorSoftware>()
+                .HasOne(x => x.Contractor)
+                .WithMany(x => x.AvailableSoftware)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<ContractorSoftware>()
-            //    .HasOne(x => x.Software)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ContractorSoftware>()
+                .HasOne(x => x.Software)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Document
+            #region Document
 
-            //modelBuilder.Entity<Document>()
-            //    .HasOne(x => x.Account)
-            //    .WithMany(x => x.Documents)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Document>()
+                .HasOne(x => x.Account)
+                .WithMany(x => x.Documents)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Discipline
+            #region Discipline
 
-            //modelBuilder.Entity<Discipline>()
-            //    .HasMany(x => x.ProfessionDisciplines)
-            //    .WithOne(x => x.Discipline)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Discipline>()
+                .HasMany(x => x.ProfessionDisciplines)
+                .WithOne(x => x.Discipline)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Profession
+            #region Profession
 
-            //modelBuilder.Entity<Profession>()
-            //    .HasMany(x => x.ProfessionDisciplines)
-            //    .WithOne(x => x.Profession)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Profession>()
+                .HasMany(x => x.ProfessionDisciplines)
+                .WithOne(x => x.Profession)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region License
+            #region License
 
-            //modelBuilder.Entity<License>()
-            //    .HasOne(x => x.State)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<License>()
+                .HasOne(x => x.State)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            #endregion
 
-            //#region Review 
+            #region Review 
 
-            //modelBuilder.Entity<Review>()
-            //    .HasOne(x => x.ContractorAccount) 
-            //    .WithMany(x => x.ContractorReviews)
-            //    .OnDelete(DeleteBehavior.NoAction);
-            
-            //modelBuilder.Entity<Review>()
-            //    .HasOne(x => x.SolicitorAccount) 
-            //    .WithMany(x => x.SolicitorReviews)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Review>()
+                .HasOne(x => x.ContractorUser)
+                .WithMany(x => x.ContractorReviews)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            modelBuilder.Entity<Review>()
+                .HasOne(x => x.SolicitorUser)
+                .WithMany(x => x.SolicitorReviews)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#region Solicitation
+            #endregion
 
-            //modelBuilder.Entity<Solicitation>()
-            //    .HasOne(x => x.Solicitor)
-            //    .WithMany(x => x.Solicitations)
-            //    .OnDelete(DeleteBehavior.NoAction);
-            
-            //modelBuilder.Entity<Solicitation>()
-            //    .HasOne(x => x.Deadline)
-            //    .WithOne(x => x.Solicitation)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #region Solicitation
 
-            //modelBuilder.Entity<Solicitation>()
-            //    .HasMany(x => x.Contractors)
-            //    .WithOne(x => x.Solicitation)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Solicitation>()
+                .HasOne(x => x.Solicitor)
+                .WithMany(x => x.Solicitations)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#endregion
+            modelBuilder.Entity<Solicitation>()
+                .HasOne(x => x.Deadline)
+                .WithOne(x => x.Solicitation)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#region SolicitationContractor
+            modelBuilder.Entity<Solicitation>()
+                .HasMany(x => x.Contractors)
+                .WithOne(x => x.Solicitation)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<SolicitationContractor>()
-            //    .HasOne(x => x.Contractor)
-            //    .WithMany(x => x.Solicitations)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #endregion
 
-            //modelBuilder.Entity<SolicitationContractor>()
-            //    .HasMany(x => x.StatusUpdates)
-            //    .WithOne(x => x.Contractor)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #region SolicitationContractor
 
-            //#endregion
+            modelBuilder.Entity<SolicitationContractor>()
+                .HasOne(x => x.Contractor)
+                .WithMany(x => x.Solicitations)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#region SolicitationDeadline
+            modelBuilder.Entity<SolicitationContractor>()
+                .HasMany(x => x.StatusUpdates)
+                .WithOne(x => x.Contractor)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<SolicitationDeadline>()
-            //    .HasOne(x => x.DeadlineType)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #endregion
 
-            //#endregion
+            #region SolicitationDeadline
 
-            //#region SolicitationRole
+            modelBuilder.Entity<SolicitationDeadline>()
+                .HasOne(x => x.DeadlineType)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<SolicitationRole>()
-            //    .HasMany(x => x.ProvidedSoftware)
-            //    .WithOne(x => x.SolicitationRole)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #endregion
 
-            //modelBuilder.Entity<SolicitationRole>()
-            //    .HasMany(x => x.RequiredSoftware)
-            //    .WithOne(x => x.SolicitationRole)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #region SolicitationRole
 
-            //#endregion
+            modelBuilder.Entity<SolicitationRole>()
+                .HasMany(x => x.ProvidedSoftware)
+                .WithOne(x => x.SolicitationRole)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //#region Solicitor
+            modelBuilder.Entity<SolicitationRole>()
+                .HasMany(x => x.RequiredSoftware)
+                .WithOne(x => x.SolicitationRole)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Solicitor>()
-            //    .HasMany(x => x.StatusUpdates)
-            //    .WithOne(x => x.Solicitor)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #endregion
 
-            //#endregion
+            #region Solicitor
 
-            //#region Specialty
+            modelBuilder.Entity<Solicitor>()
+                .HasMany(x => x.StatusUpdates)
+                .WithOne(x => x.Solicitor)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Expertise>()
-            //    .HasOne(x => x.Focus)
-            //    .WithMany(x => x.Expertises)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            #endregion
 
-            //#endregion
+            #region Specialty
+
+            modelBuilder.Entity<Expertise>()
+                .HasOne(x => x.Focus)
+                .WithMany(x => x.Expertises)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            #endregion
         }
     }
 }

@@ -18,6 +18,7 @@ namespace En_Luna.Data
             base.OnModelCreating(builder);
 
             builder.ConfigureIdentityTableNames();
+            builder.DefineRelationships();
         }
     }
 }

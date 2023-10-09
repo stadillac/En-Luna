@@ -73,7 +73,7 @@ namespace En_Luna.Migrations
                     b.HasIndex("StateId")
                         .IsUnique();
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.BankAccount", b =>
@@ -122,7 +122,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankAccount");
+                    b.ToTable("BankAccounts");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.CompanyType", b =>
@@ -156,7 +156,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyType");
+                    b.ToTable("CompanyTypes");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Contractor", b =>
@@ -191,7 +191,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("ProfessionDisciplineId");
 
-                    b.ToTable("Contractor");
+                    b.ToTable("Contractors");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.ContractorSoftware", b =>
@@ -265,7 +265,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeadlineType");
+                    b.ToTable("DeadlineTypes");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Discipline", b =>
@@ -299,7 +299,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Discipline");
+                    b.ToTable("Disciplines");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Document", b =>
@@ -341,7 +341,29 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Document");
+                    b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("En_Luna.Data.Models.ErrorLog", b =>
+                {
+                    b.Property<Guid>("ErrorLogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ErrorDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ErrorLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ErrorLogId");
+
+                    b.ToTable("ErrorLogs");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Expertise", b =>
@@ -380,7 +402,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("FocusId");
 
-                    b.ToTable("Expertise");
+                    b.ToTable("Expertises");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Focus", b =>
@@ -420,7 +442,7 @@ namespace En_Luna.Migrations
                     b.HasIndex("DisciplineId")
                         .IsUnique();
 
-                    b.ToTable("Focus");
+                    b.ToTable("Focuses");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.License", b =>
@@ -474,7 +496,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("License");
+                    b.ToTable("Licenses");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Profession", b =>
@@ -514,7 +536,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profession");
+                    b.ToTable("Professions");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.ProfessionDiscipline", b =>
@@ -554,7 +576,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("ProfessionId");
 
-                    b.ToTable("ProfessionDiscipline");
+                    b.ToTable("ProfessionDisciplines");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.ProjectDeliverable", b =>
@@ -596,7 +618,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectDeliverable");
+                    b.ToTable("ProjectDeliverables");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Review", b =>
@@ -651,7 +673,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitorUserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Software", b =>
@@ -769,7 +791,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitorId");
 
-                    b.ToTable("Solicitation");
+                    b.ToTable("Solicitations");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.SolicitationContractor", b =>
@@ -814,7 +836,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitationRoleId");
 
-                    b.ToTable("SolicitationContractor");
+                    b.ToTable("SolicitationContractors");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.SolicitationDeadline", b =>
@@ -858,7 +880,7 @@ namespace En_Luna.Migrations
                     b.HasIndex("SolicitationId")
                         .IsUnique();
 
-                    b.ToTable("SolicitationDeadline");
+                    b.ToTable("SolicitationDeadlines");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.SolicitationRole", b =>
@@ -938,7 +960,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitationId");
 
-                    b.ToTable("SolicitationRole");
+                    b.ToTable("SolicitationRoles");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.SolicitationRoleProvidedSoftware", b =>
@@ -1048,7 +1070,7 @@ namespace En_Luna.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Solicitor");
+                    b.ToTable("Solicitors");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.Specialty", b =>
@@ -1087,7 +1109,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("ExpertiseId");
 
-                    b.ToTable("Specialty");
+                    b.ToTable("Specialties");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.State", b =>
@@ -1130,7 +1152,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitationId");
 
-                    b.ToTable("State");
+                    b.ToTable("States");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.StatusUpdate", b =>
@@ -1174,7 +1196,7 @@ namespace En_Luna.Migrations
 
                     b.HasIndex("SolicitorId");
 
-                    b.ToTable("StatusUpdate");
+                    b.ToTable("StatusUpdates");
                 });
 
             modelBuilder.Entity("En_Luna.Data.Models.User", b =>
@@ -1229,6 +1251,9 @@ namespace En_Luna.Migrations
 
                     b.Property<int>("HoursAvailablePerWeek")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");

@@ -1,18 +1,19 @@
 using En_Luna.Data;
 using En_Luna.Data.Models;
+using En_Luna.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationContext>();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationContext>()
@@ -20,6 +21,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
             .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
+builder.Services.RegisterServices();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -41,6 +45,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.MapControllerRoute(
     name: "default",

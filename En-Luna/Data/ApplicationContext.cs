@@ -1,6 +1,5 @@
 ﻿using En_Luna.Data.Models;
 using En_Luna.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -47,24 +46,16 @@ namespace En_Luna.Data
         /// Initializes a new instance of the <see cref="ApplicationContext"/> class.
         /// </summary>
         /// <param name="options">The options.</param>
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationContext"/> class.
         /// </summary>
         public ApplicationContext() { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationContext"/> class.
-        /// </summary>
-        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        public ApplicationContext(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

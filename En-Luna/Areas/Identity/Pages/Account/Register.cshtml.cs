@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 namespace En_Luna.Areas.Identity.Pages.Account
 {
     using En_Luna.Data.Models;
+    using En_Luna.Data.Services;
     using En_Luna.ViewModels;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.ComponentModel;
@@ -34,13 +35,19 @@ namespace En_Luna.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IStateService _stateService;
+        private readonly IProfessionDisciplineService _professionDisciplineService;
+        private readonly ICompanyTypeService _companyTypeService;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IStateService stateService,
+            IProfessionDisciplineService professionDisciplineService,
+            ICompanyTypeService companyTypeService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +55,9 @@ namespace En_Luna.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _stateService = stateService;
+            _professionDisciplineService = professionDisciplineService;
+            _companyTypeService = companyTypeService;
         }
 
         /// <summary>
@@ -55,7 +65,8 @@ namespace En_Luna.Areas.Identity.Pages.Account
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public UserEditViewModel Input { get; set; } = new();
+        //public InputModel Input { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -165,6 +176,8 @@ namespace En_Luna.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            InstantiateRelatedModels();
+            InstantiateSelectLists();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -236,6 +249,28 @@ namespace En_Luna.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<User>)_userStore;
+        }
+
+        private void InstantiateRelatedModels()
+        {
+            Input.Address = Input.Address ?? new();
+            Input.BankAccount = Input.BankAccount ?? new();
+            Input.Contractor = Input.Contractor ?? new();
+        }
+
+        private void InstantiateSelectLists()
+        {
+            Input.Address.States = new SelectList(_stateService.List(), "Id", "Name", Input.Address.StateId);
+            Input.Contractor.ProfessionDisciplines = new SelectList(
+                _professionDisciplineService
+                    .List()
+                    .OrderBy(x => x.Profession.Name)
+                    .ThenBy(x => x.Discipline.Name),
+                "Id",
+                "Name",
+                Input.Contractor.ProfessionDisciplineId
+            );
+            Input.CompanyTypes = new SelectList(_companyTypeService.List(), "Id", "Name", Input.CompanyTypeId);
         }
     }
 }

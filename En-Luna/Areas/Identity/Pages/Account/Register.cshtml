@@ -25,40 +25,64 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Input.FirstName, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(x => x.Input.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(x => x.Input.FirstName, "", new { @class = "text-danger" })
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.Input.FirstName, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(x => x.Input.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(x => x.Input.FirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.Input.LastName, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(x => x.Input.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(x => x.Input.LastName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.Input.Email, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(x => x.Input.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(x => x.Input.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.Input.PhoneNumber, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(x => x.Input.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(x => x.Input.PhoneNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            @Html.LabelFor(x => x.Input.SocialSecurityNumber, htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(x => x.Input.SocialSecurityNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(x => x.Input.SocialSecurityNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Input.LastName, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(x => x.Input.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(x => x.Input.LastName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Input.Email, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(x => x.Input.Email, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(x => x.Input.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Input.PhoneNumber, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(x => x.Input.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(x => x.Input.PhoneNumber, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Input.SocialSecurityNumber, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(x => x.Input.SocialSecurityNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(x => x.Input.SocialSecurityNumber, "", new { @class = "text-danger" })
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label asp-for="Input.Password">Password</label>
+                                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

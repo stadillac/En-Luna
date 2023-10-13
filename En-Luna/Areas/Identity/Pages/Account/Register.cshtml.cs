@@ -2,27 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace En_Luna.Areas.Identity.Pages.Account
 {
+    using AutoMapper;
+    using En_Luna.Data;
     using En_Luna.Data.Models;
     using En_Luna.Data.Services;
+    using En_Luna.Extensions;
     using En_Luna.ViewModels;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.ComponentModel;
@@ -38,6 +34,9 @@ namespace En_Luna.Areas.Identity.Pages.Account
         private readonly IStateService _stateService;
         private readonly IProfessionDisciplineService _professionDisciplineService;
         private readonly ICompanyTypeService _companyTypeService;
+        private readonly IMapper _mapper;
+        private readonly ApplicationContext _context;
+        private readonly IAddressService _addressService;
 
         public RegisterModel(
             UserManager<User> userManager,
@@ -47,7 +46,10 @@ namespace En_Luna.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IStateService stateService,
             IProfessionDisciplineService professionDisciplineService,
-            ICompanyTypeService companyTypeService)
+            ICompanyTypeService companyTypeService,
+            IMapper mapper,
+            ApplicationContext context,
+            IAddressService addressService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -58,6 +60,9 @@ namespace En_Luna.Areas.Identity.Pages.Account
             _stateService = stateService;
             _professionDisciplineService = professionDisciplineService;
             _companyTypeService = companyTypeService;
+            _mapper = mapper;
+            _context = context;
+            _addressService = addressService;
         }
 
         /// <summary>
@@ -184,12 +189,19 @@ namespace En_Luna.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                //user = _mapper.Map<User>(Input);
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, GenerateUsername(Input), CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                user.Address = _mapper.Map<Address>(Input.Address);
+                user.BankAccount = _mapper.Map<BankAccount>(Input.BankAccount);
+                user.Contractor = _mapper.Map<Contractor>(Input.Contractor);
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -225,6 +237,8 @@ namespace En_Luna.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            InstantiateRelatedModels();
+            InstantiateSelectLists();
             return Page();
         }
 
@@ -271,6 +285,25 @@ namespace En_Luna.Areas.Identity.Pages.Account
                 Input.Contractor.ProfessionDisciplineId
             );
             Input.CompanyTypes = new SelectList(_companyTypeService.List(), "Id", "Name", Input.CompanyTypeId);
+        }
+
+        private string GenerateUsername(UserEditViewModel user)
+        {
+            var userName = $"{user.FirstName.Substring(0, 1)}{user.LastName}";
+
+            var possibleDuplicateUsernames = _context.Users.Where(x => x.UserName != null && x.UserName.Contains(userName)).ToList();
+
+            // if we have an account with the generated username
+            if (possibleDuplicateUsernames.Any(x => x.UserName != null && x.UserName.RemoveDigits().Equals(userName)))
+            {
+                // get a count of how many accounts have the same user name
+                int count = _context.Users.Count(x => x.UserName != null && x.UserName.RemoveDigits().Equals(userName));
+
+                // append the count + 1 to the username
+                userName += count + 1;
+            }
+
+            return userName;
         }
     }
 }

@@ -90,7 +90,7 @@ namespace En_Luna.Extensions
 
             modelBuilder.Entity<Address>()
                 .HasOne(x => x.State)
-                .WithOne()
+                .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 
             #endregion

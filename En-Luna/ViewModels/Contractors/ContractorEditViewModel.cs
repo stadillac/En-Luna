@@ -7,6 +7,7 @@ namespace En_Luna.ViewModels
     {
         public int Id { get; set; }
 
+        [DisplayName("Profession & Discipline")]
         public int ProfessionDisciplineId { get; set; }
         public UserEditViewModel? Account { get; set; }
 

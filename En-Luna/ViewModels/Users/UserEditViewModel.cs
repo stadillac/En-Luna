@@ -6,6 +6,14 @@ namespace En_Luna.ViewModels
 {
     public class UserEditViewModel
     {
+        public UserEditViewModel()
+        {
+            if (this.Id == null)
+            {
+                this.Id = Guid.NewGuid().ToString();
+            }
+        }
+
         public string? Id { get; set; }
         public int AddressId { get; set; }
         public int BankAccountId { get; set; }

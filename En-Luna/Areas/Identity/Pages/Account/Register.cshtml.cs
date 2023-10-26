@@ -192,15 +192,10 @@ namespace En_Luna.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
-                //user = _mapper.Map<User>(Input);
+                var user = _mapper.Map<User>(Input);
 
                 await _userStore.SetUserNameAsync(user, GenerateUsername(Input), CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-                user.Address = _mapper.Map<Address>(Input.Address);
-                user.BankAccount = _mapper.Map<BankAccount>(Input.BankAccount);
-                user.Contractor = _mapper.Map<Contractor>(Input.Contractor);
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -291,13 +286,13 @@ namespace En_Luna.Areas.Identity.Pages.Account
         {
             var userName = $"{user.FirstName.Substring(0, 1)}{user.LastName}";
 
-            var possibleDuplicateUsernames = _context.Users.Where(x => x.UserName != null && x.UserName.Contains(userName)).ToList();
+            var possibleDuplicateUsernames = _context.Users.Where(x => x.NormalizedUserName != null && x.NormalizedUserName.Contains(userName)).ToList();
 
             // if we have an account with the generated username
-            if (possibleDuplicateUsernames.Any(x => x.UserName != null && x.UserName.RemoveDigits().Equals(userName)))
+            if (possibleDuplicateUsernames.Any(x => x.NormalizedUserName != null && x.NormalizedUserName.RemoveDigits().Equals(userName.ToUpper())))
             {
                 // get a count of how many accounts have the same user name
-                int count = _context.Users.Count(x => x.UserName != null && x.UserName.RemoveDigits().Equals(userName));
+                int count = possibleDuplicateUsernames.Count(x => x.NormalizedUserName.RemoveDigits().Equals(userName.ToUpper()));
 
                 // append the count + 1 to the username
                 userName += count + 1;

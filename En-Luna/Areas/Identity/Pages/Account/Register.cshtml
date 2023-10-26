@@ -116,15 +116,6 @@
                             </div>
                             
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    @Html.CheckBoxFor(x => x.Input.IsVerified, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.LabelFor(x => x.Input.IsVerified, htmlAttributes: new { @class = "control-label" })
-                                    @Html.ValidationMessageFor(x => x.Input.IsVerified, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -224,15 +215,6 @@
                                     @Html.LabelFor(x => x.Input.BankAccount.AccountNumber, htmlAttributes: new { @class = "control-label" })
                                     @Html.EditorFor(x => x.Input.BankAccount.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(x => x.Input.BankAccount.AccountNumber, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    @Html.CheckBoxFor(x => x.Input.BankAccount.IsVerified, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.LabelFor(x => x.Input.BankAccount.IsVerified, htmlAttributes: new { @class = "control-label" })
-                                    @Html.ValidationMessageFor(x => x.Input.BankAccount.IsVerified, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>

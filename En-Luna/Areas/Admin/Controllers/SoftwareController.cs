@@ -3,12 +3,15 @@ using En_Luna.Data.Models;
 using En_Luna.Data.Services;
 using En_Luna.Extensions;
 using En_Luna.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using X.PagedList;
 
 namespace Jobbie.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SoftwareController : Controller
     {
         private readonly IMapper _mapper;

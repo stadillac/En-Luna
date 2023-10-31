@@ -4,7 +4,7 @@ namespace En_Luna.ViewModels
 {
     public class UserViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         public int ContractorId { get; set; }
 

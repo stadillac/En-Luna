@@ -25,6 +25,12 @@ builder.Services.RegisterServices();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("AZURE_REDIS_CONNECTIONSTRING");
+    options.InstanceName = "EnLuna";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

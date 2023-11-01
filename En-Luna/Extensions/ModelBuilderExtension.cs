@@ -43,6 +43,7 @@ namespace En_Luna.Extensions
                 entity.ToTable("UserTokens", "Identity");
             });
 
+            builder.SeedAdminData();
         }
 
         public static void DefineRelationships(this ModelBuilder modelBuilder)
@@ -246,6 +247,96 @@ namespace En_Luna.Extensions
                 .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
+        }
+
+        public static void SeedAdminData(this ModelBuilder modelBuilder)
+        {
+            string ADMIN_ID = "02174cf0–9412–4cfe-afbf-59f706d72cf6";
+            string ROLE_ID = "341743f0-asd2–42de-afbf-59kmkkmk72cf6";
+
+            //seed admin role
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                Id = ROLE_ID,
+                ConcurrencyStamp = ROLE_ID
+            });
+
+            modelBuilder.Entity<Profession>().HasData(new Profession 
+            {
+                Id = 1,
+                Name = "Admin",
+                CreatedBy = "seed"
+            });
+
+            modelBuilder.Entity<Discipline>().HasData(new Discipline
+            {
+                Id = 1,
+                Name = "Admin",
+                CreatedBy = "seed"
+            });
+
+            modelBuilder.Entity<ProfessionDiscipline>().HasData(new ProfessionDiscipline 
+            {
+                Id = 1,
+                ProfessionId = 1,
+                DisciplineId = 1
+            });
+
+            modelBuilder.Entity<Contractor>().HasData(new Contractor
+            {
+                Id = 1,
+                ProfessionDisciplineId = 1
+            });
+
+            modelBuilder.Entity<State>().HasData(new State
+            {
+                Id = 1,
+                Name = "Colorado",
+                Abbreviation = "CO"
+            });
+
+            
+            modelBuilder.Entity<Address>().HasData(new Address
+            {
+                Id = 1,
+                StateId = 1
+            });
+
+            modelBuilder.Entity<BankAccount>().HasData(new BankAccount
+            {
+                Id = 1,
+            });
+
+            //create user
+            var appUser = new User
+            {
+                Id = ADMIN_ID,
+                Email = "superadmin@superadmin.com",
+                EmailConfirmed = true,
+                FirstName = "Frank",
+                LastName = "Ofoedu",
+                UserName = "superadmin",
+                NormalizedUserName = "SUPERADMIN",
+                ContractorId = 1,
+                AddressId = 1,
+                BankAccountId = 1
+            };
+
+            //set user password
+            PasswordHasher<User> ph = new PasswordHasher<User>();
+            appUser.PasswordHash = ph.HashPassword(appUser, "jobbielol");
+
+            //seed user
+            modelBuilder.Entity<User>().HasData(appUser);
+
+            //set user role to admin
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
+            });
         }
     }
 }

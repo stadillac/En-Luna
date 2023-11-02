@@ -140,6 +140,11 @@ namespace En_Luna.Extensions
                 .WithOne(x => x.Discipline)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Discipline>()
+                .HasMany(x => x.Focuses)
+                .WithOne(X => X.Discipline)
+                .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
 
             #region Profession

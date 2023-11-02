@@ -23,7 +23,7 @@ namespace En_Luna.Data.Models
         /// <value>
         /// The Focus.
         /// </value>
-        public virtual Focus? Focus { get; set; }
+        public virtual ICollection<Focus>? Focuses { get; set; } = new Collection<Focus>();
 
         /// <summary>
         /// Navgiational property. Gets or sets the profession disciplines.

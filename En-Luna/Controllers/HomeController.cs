@@ -18,6 +18,12 @@ namespace En_Luna.Controllers
             return View();
         }
 
+        [Route("Blog")]
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

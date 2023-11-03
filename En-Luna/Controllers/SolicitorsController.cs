@@ -4,6 +4,7 @@ using En_Luna.Data.Services;
 using En_Luna.Extensions;
 using En_Luna.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace En_Luna.Controllers
@@ -15,12 +16,13 @@ namespace En_Luna.Controllers
 
         private readonly IMapper _mapper;
         private readonly ISolicitationService _solicitationService;
+        private readonly IStateService _stateService;
 
-
-        public SolicitorsController(IMapper mapper, ISolicitationService solicitationService)
+        public SolicitorsController(IMapper mapper, ISolicitationService solicitationService, IStateService stateService)
         {
             _mapper = mapper;
             _solicitationService = solicitationService;
+            _stateService = stateService;
         }
 
         [HttpGet("{id:int}")]
@@ -52,7 +54,7 @@ namespace En_Luna.Controllers
             }
 
             SolicitationEditViewModel model = _mapper.Map<SolicitationEditViewModel>(solicitation);
-            //InstantiateSelectLists(model);
+            InstantiateSelectLists(model);
 
             return View(model);
         }
@@ -61,7 +63,7 @@ namespace En_Luna.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //InstantiateSelectLists(model);
+                InstantiateSelectLists(model);
                 return View(model);
             }
 
@@ -78,6 +80,75 @@ namespace En_Luna.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult Activate(int id)
+        {
+            //todo add logic that informs admin of activity
+
+            Solicitation? solicitation = _solicitationService.Get(x => x.Id == id);
+
+            if (solicitation == null)
+            {
+                return Json(false);
+            }
+
+            _solicitationService.Activate(solicitation);
+
+            return Json(true);
+        }
+
+        public JsonResult Deactivate(int id)
+        {
+            //todo add logic that informs admin of activity
+
+            Solicitation? solicitation = _solicitationService.Get(x => x.Id == id);
+
+            if (solicitation == null)
+            {
+                return Json(false);
+            }
+
+            _solicitationService.Deactivate(solicitation);
+
+            return Json(true);
+        }
+
+        public JsonResult Complete(int id, bool isComplete)
+        {
+            //todo add logic that informs admin of activity
+
+            Solicitation? solicitation = _solicitationService.Get(x => x.Id == id);
+
+            if (solicitation == null)
+            {
+                return Json(false);
+            }
+
+            _solicitationService.Complete(solicitation, isComplete);
+
+            return Json(true);
+        }
+
+        public JsonResult Cancel(int id, bool isCancelled)
+        {
+            //todo add logic that informs admin of activity
+
+            Solicitation? solicitation = _solicitationService.Get(x => x.Id == id);
+
+            if (solicitation == null)
+            {
+                return Json(false);
+            }
+
+            _solicitationService.Cancel(solicitation, isCancelled);
+
+            return Json(true);
+        }
+
+        private void InstantiateSelectLists(SolicitationEditViewModel model)
+        {
+            model.States = new SelectList(_stateService.List(), "Id", "Name", model.StateId);
         }
 
     }

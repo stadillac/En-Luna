@@ -65,9 +65,10 @@
 
         @{
             var isAdminPage = Context.Request.Path.ToString().Contains("Admin");
+            var isIdentityPage = Context.Request.Path.ToString().Contains("Identity");
         }
 
-        @if (isAdminPage)
+        @if (isAdminPage || isIdentityPage)
         {
             <div class="container pt-5 mt-5">
                 @RenderBody()

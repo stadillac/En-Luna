@@ -27,6 +27,7 @@ namespace En_Luna.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -40,6 +41,7 @@ namespace En_Luna.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
@@ -52,6 +54,7 @@ namespace En_Luna.Areas.Identity.Pages.Account
             IAddressService addressService)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
@@ -199,6 +202,8 @@ namespace En_Luna.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                await HandleRoles(user);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -235,6 +240,16 @@ namespace En_Luna.Areas.Identity.Pages.Account
             InstantiateRelatedModels();
             InstantiateSelectLists();
             return Page();
+        }
+
+        private async Task HandleRoles(User user)
+        {
+            await _userManager.AddToRoleAsync(user, "Contractor");
+
+            if (Input.IsSolicitor)
+            {
+                await _userManager.AddToRoleAsync(user, "Solicitor");
+            }
         }
 
         private User CreateUser()

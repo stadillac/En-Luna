@@ -44,6 +44,16 @@
             var user = await UserManager.GetUserAsync(User);
         }
 
+        @if (user != null && await UserManager.IsInRoleAsync(user, "Solicitor"))
+        {
+            <li><a href="/Solicitor">My Solicitations</a></li>
+        }
+        
+        @if (user != null && await UserManager.IsInRoleAsync(user, "Contractor"))
+        {
+            <li><a href="/Contractor">My Contracts</a></li>
+        }
+
         @if (user != null && await UserManager.IsInRoleAsync(user, "Admin"))
         {
             <partial name="_AdminPartial" />

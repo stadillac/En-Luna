@@ -3,17 +3,16 @@ using En_Luna.Data.Models;
 using En_Luna.Data.Services;
 using En_Luna.Extensions;
 using En_Luna.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
 
 namespace En_Luna.Controllers
 {
+    [Authorize(Roles = "Solicitor")]
     public class SolicitorsController : Controller
     {
-        // create / edit / delete
-        // view my solicitations (filter on page)
-
         private readonly IMapper _mapper;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;

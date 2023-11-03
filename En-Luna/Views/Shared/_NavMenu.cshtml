@@ -46,7 +46,7 @@
 
         @if (user != null && await UserManager.IsInRoleAsync(user, "Solicitor"))
         {
-            <li><a href="/Solicitor">My Solicitations</a></li>
+            <li><a href=@($"/Solicitations/{user.SolicitorId}")>My Solicitations</a></li>
         }
         
         @if (user != null && await UserManager.IsInRoleAsync(user, "Contractor"))

@@ -10,14 +10,15 @@ using X.PagedList;
 
 namespace En_Luna.Controllers
 {
+    [Route("Solicitations")]
     [Authorize(Roles = "Solicitor")]
-    public class SolicitorsController : Controller
+    public class SolicitationsController : Controller
     {
         private readonly IMapper _mapper;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;
 
-        public SolicitorsController(IMapper mapper, ISolicitationService solicitationService, IStateService stateService)
+        public SolicitationsController(IMapper mapper, ISolicitationService solicitationService, IStateService stateService)
         {
             _mapper = mapper;
             _solicitationService = solicitationService;

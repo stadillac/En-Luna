@@ -28,7 +28,6 @@ namespace En_Luna.ViewModels
         public DateTime EstimatedEndDate { get; set; }
 
         [DisplayName("Team Meeting Time")]
-        [DataType(DataType.Time)]
         public DateTime TeamMeetingTime { get; set; }
 
         [DisplayName("Active")]

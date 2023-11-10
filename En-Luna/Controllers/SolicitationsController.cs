@@ -15,12 +15,15 @@ namespace En_Luna.Controllers
     public class SolicitationsController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IProjectDeliverableService _projectDeliverableService;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;
 
-        public SolicitationsController(IMapper mapper, ISolicitationService solicitationService, IStateService stateService)
+        public SolicitationsController(IMapper mapper, IProjectDeliverableService projectDeliverableService,
+            ISolicitationService solicitationService, IStateService stateService)
         {
             _mapper = mapper;
+            _projectDeliverableService = projectDeliverableService;
             _solicitationService = solicitationService;
             _stateService = stateService;
         }
@@ -150,6 +153,13 @@ namespace En_Luna.Controllers
 
         private void InstantiateSelectLists(SolicitationEditViewModel model)
         {
+            model.SolicitationRole.ProjectDeliverables = new SelectList(
+                _projectDeliverableService.List(), 
+                "Id", 
+                "Name", 
+                model.SolicitationRole.ProjectDeliverableId
+            );
+
             model.States = new SelectList(_stateService.List(), "Id", "Name", model.StateId);
         }
 

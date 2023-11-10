@@ -47,5 +47,9 @@ namespace En_Luna.ViewModels
         public int StateId { get; set; }
 
         public SelectList? States { get; set; }
+
+        public SolicitationRoleEditViewModel SolicitationRole { get; set; } = new();
+
+        public List<SolicitationRoleViewModel> SolicitationRoles { get; set; } = new List<SolicitationRoleViewModel>();
     }
 }

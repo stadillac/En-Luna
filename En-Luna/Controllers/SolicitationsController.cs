@@ -25,7 +25,7 @@ namespace En_Luna.Controllers
             _stateService = stateService;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}/{page:int?}")]
         public IActionResult Index(int id, int? page)
         {
             IEnumerable<Solicitation> solicitations = _solicitationService.List(x => x.SolicitorId == id);
@@ -42,6 +42,7 @@ namespace En_Luna.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Edit(int? id)
         {
             Solicitation? solicitation = id.HasValue
@@ -59,6 +60,7 @@ namespace En_Luna.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult Edit(SolicitationEditViewModel model)
         {
             if (!ModelState.IsValid)

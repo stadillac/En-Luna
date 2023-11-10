@@ -16,56 +16,94 @@
 
         <div class="row">
             <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EstimatedEndDate, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EstimatedEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EstimatedEndDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TeamMeetingTime, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TeamMeetingTime, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TeamMeetingTime, "", new { @class = "text-danger" })
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EstimatedEndDate, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.EstimatedEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.EstimatedEndDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TeamMeetingTime, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.TeamMeetingTime, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TeamMeetingTime, "", new { @class = "text-danger" })
+                                </div>
+
+                                <!--TODO ADD TIME ZONE-->
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.County, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.County, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.County, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.StateId, Model.States, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SharedDriveUrl, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.SharedDriveUrl, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.SharedDriveUrl, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.County, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.County, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.County, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownListFor(model => model.StateId, Model.States, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SharedDriveUrl, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SharedDriveUrl, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SharedDriveUrl, "", new { @class = "text-danger" })
+                <div class="card mb-5">
+                    <div class="card-header">
+                        Deadline
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SolicitationDeadline.DeadlineTypeId, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.SolicitationDeadline.DeadlineTypeId, Model.SolicitationDeadline.DeadlineTypes, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SolicitationDeadline.DeadlineTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,37 +116,28 @@
                     <div class="card-body">
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.SolicitationRole.SolicitationId)
-                        @if (Model.SolicitationRoles.Any())
-                        {
-                            <div class="row">
-                                <div class="col">
-                                    <table class="table">
-                                        <thead>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">TODO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="SolicitationRoleTable">
+                                        @foreach (SolicitationRoleViewModel item in Model.SolicitationRoles)
+                                        {
                                             <tr>
+                                                <td>TODO</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="col">TODO</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (SolicitationRoleViewModel item in Model.SolicitationRoles)
-                                            {
-                                                <tr>
-                                                    <td>TODO</td>
-                                                    @*<td>
-                                            <a href="/Admin/SolicitationRoles/Edit/@item.Id" class="btn btn-primary">Edit</a>
-                                            </td>
-                                            <td>
-                                            <a href="javascript:void(0);" class="btn btn-danger" onclick="softDelete('/Admin/SolicitationRoles/Delete', @item.Id, this)">Delete</a>
-                                            </td>*@
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                    <hr class="p-2" />
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
+                                <hr class="p-2" />
                             </div>
-                        }
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -166,6 +195,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="p-1"/>
                         <div class="row">
                             <div class="col">
                                 <button id="AddRole" class="btn btn-outline-primary">Add Role</button>
@@ -195,7 +225,12 @@
             },
             addRole: function(e) {
                 e.preventDefault();
-                
+
+                $("#SolicitationRoleTable").append($('<tr>')
+                    .append($('<td>')
+                        .append("TODO")
+                    )
+                );
                 // todo, take values of fields in solicitation role inputs and create a role
                 // add role to model
                 // add a line to table

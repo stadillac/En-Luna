@@ -123,14 +123,20 @@
                                         <tr>
                                         </tr>
                                         <tr>
-                                            <th scope="col">TODO</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Project Deliverable</th>
+                                            <th scope="col">Workload</th>
+                                            <th scope="col">Has Been Fulfilled</th>
                                         </tr>
                                     </thead>
                                     <tbody id="SolicitationRoleTable">
                                         @foreach (SolicitationRoleViewModel item in Model.SolicitationRoles)
                                         {
                                             <tr>
-                                                <td>TODO</td>
+                                                <td>item.Description</td>
+                                                <td>item.ProjectDeliverableId</td>
+                                                <td>item.Workload</td>
+                                                <td>false</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -142,7 +148,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.ProjectDeliverableId, htmlAttributes: new { @class = "control-label" })
-                                    @Html.DropDownListFor(model => model.SolicitationRole.ProjectDeliverableId, Model.SolicitationRole.ProjectDeliverables, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.SolicitationRole.ProjectDeliverableId, Model.SolicitationRole.ProjectDeliverables, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control", @id="projectDeliverableInput" })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.ProjectDeliverableId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -151,7 +157,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.Description, htmlAttributes: new { @class = "control-label" })
-                                    @Html.TextAreaFor(model => model.SolicitationRole.Description, new { @class = "form-control" })
+                                    @Html.TextAreaFor(model => model.SolicitationRole.Description, new { @class = "form-control", @id="descriptionInput" })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.Description, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -160,14 +166,14 @@
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.Workload, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.SolicitationRole.Workload, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.SolicitationRole.Workload, new { htmlAttributes = new { @class = "form-control", @id = "workloadInput" } })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.Workload, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.DeliverableDeadline, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.SolicitationRole.DeliverableDeadline, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.SolicitationRole.DeliverableDeadline, new { htmlAttributes = new { @class = "form-control", @id = "deliverableDeadlineInput" } })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.DeliverableDeadline, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -176,21 +182,21 @@
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.LumpSum, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.SolicitationRole.LumpSum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.SolicitationRole.LumpSum, new { htmlAttributes = new { @class = "form-control", @id="lumpSumInput" } })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.LumpSum, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.HourlyRate, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.SolicitationRole.HourlyRate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.SolicitationRole.HourlyRate, new { htmlAttributes = new { @class = "form-control", @id="hourlyRateInput" } })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.HourlyRate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.SolicitationRole.SignBonus, htmlAttributes: new { @class = "control-label" })
-                                    @Html.EditorFor(model => model.SolicitationRole.SignBonus, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.SolicitationRole.SignBonus, new { htmlAttributes = new { @class = "form-control", @id="signBonusInput" } })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.SignBonus, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -226,15 +232,38 @@
             addRole: function(e) {
                 e.preventDefault();
 
+                // todo, take values of fields in solicitation role inputs and create a role
+                var projectDeliverable = $("#projectDeliverableInput").val();
+                var description = $("#descriptionInput").val();
+                var workload = $("#workloadInput").val();
+                var deliverableDeadline = $("#deliverableDeadlineInput").val();
+                var lumpSum = $("#lumpSumInput").val();
+                var hourlyRate = $("#hourlyRateInput").val();
+                var signBonus = $("#signBonusInput").val();
+
+                // add role to model
+
+                // add a line to table
                 $("#SolicitationRoleTable").append($('<tr>')
                     .append($('<td>')
-                        .append("TODO")
+                        .append(projectDeliverable)
+                    ).append($('<td>')
+                        .append(description)
+                    ).append($('<td>')
+                        .append(workload)
+                    ).append($('<td>')
+                        .append("No")
                     )
                 );
-                // todo, take values of fields in solicitation role inputs and create a role
-                // add role to model
-                // add a line to table
+
                 // clear inputs
+                $("#projectDeliverableInput").prop('selectedIndex', 0);
+                $("#descriptionInput").val('');
+                $("#workloadInput").val('');
+                $("#deliverableDeadlineInput").val('');
+                $("#lumpSumInput").val('');
+                $("#hourlyRateInput").val('');
+                $("#signBonusInput").val('');
             }
         };
 

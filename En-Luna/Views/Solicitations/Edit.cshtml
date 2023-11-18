@@ -6,7 +6,7 @@
     ViewData["AddContainer"] = true;
 }
 
-@using (Html.BeginForm())
+@using (var form = Html.BeginForm())
 {
     <div class="form-horizontal">
         <h2>Solicitation</h2>
@@ -130,9 +130,11 @@
                                         </tr>
                                     </thead>
                                     <tbody id="SolicitationRoleTable">
-                                        @foreach (SolicitationRoleViewModel item in Model.SolicitationRoles)
+                                        @for (int i = 0; i < Model.SolicitationRoles.Count; i++)
                                         {
                                             <tr>
+                                                @Html.HiddenFor(model => model.SolicitationRoles[i].Id)
+                                                @*@form.Hidden("ObservanceDates.Index", i.ToString())*@
                                                 <td>item.Description</td>
                                                 <td>item.ProjectDeliverableId</td>
                                                 <td>item.Workload</td>
@@ -226,6 +228,7 @@
 @section Scripts {
     <script type="text/javascript">
         var solicitationEdit = {
+            nextFreeIndex: 100000,
             init: function() {
                 $("#AddRole").on('click', solicitationEdit.addRole);
             },
@@ -244,17 +247,27 @@
                 // add role to model
 
                 // add a line to table
-                $("#SolicitationRoleTable").append($('<tr>')
-                    .append($('<td>')
-                        .append(projectDeliverable)
+
+                var row = $("<tr>")
+                    .append($("<td>")
+                        .html(projectDeliverable)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles.Index" }).val(solicitationEdit.nextFreeIndex))
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Id" }).val(0))
                     ).append($('<td>')
-                        .append(description)
+                        .html(description)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Description" }).val(description))
                     ).append($('<td>')
-                        .append(workload)
+                        .html(workload)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Workload" }).val(workload))
                     ).append($('<td>')
                         .append("No")
-                    )
-                );
+                    );
+                    //.append($("<td>", { "class": "text-center" })
+                    //    .append($("<button>", { type: "button", "class": "btn btn-default delete-date-button" })
+                    //        .append($("<span>", { "class": "glyphicon glyphicon-remove" }))
+                    //    )
+                    //);
+                $("#SolicitationRoleTable").append(row);
 
                 // clear inputs
                 $("#projectDeliverableInput").prop('selectedIndex', 0);

@@ -125,8 +125,12 @@
                                         <tr>
                                             <th scope="col">Description</th>
                                             <th scope="col">Project Deliverable</th>
+                                            <th scope="col">Lump Sum</th>
+                                            <th scope="col">Hourly Rate</th>
+                                            <th scope="col">Sign Bonus</th>
+                                            <th scope="col">Deliverable Deadline</th>
                                             <th scope="col">Workload</th>
-                                            <th scope="col">Has Been Fulfilled</th>
+                                            <th scope="col">Assigned</th>
                                         </tr>
                                     </thead>
                                     <tbody id="SolicitationRoleTable">
@@ -135,10 +139,14 @@
                                             <tr>
                                                 @Html.HiddenFor(model => model.SolicitationRoles[i].Id)
                                                 @*@form.Hidden("ObservanceDates.Index", i.ToString())*@
-                                                <td>item.Description</td>
-                                                <td>item.ProjectDeliverableId</td>
-                                                <td>item.Workload</td>
-                                                <td>false</td>
+                                                <td>@Model.SolicitationRoles[i].Description</td>
+                                                <td>@Model.SolicitationRoles[i].ProjectDeliverableId</td>
+                                                <td>@Model.SolicitationRoles[i].LumpSum</td>
+                                                <td>@Model.SolicitationRoles[i].HourlyRate</td>
+                                                <td>@Model.SolicitationRoles[i].SignBonus</td>
+                                                <td>@Model.SolicitationRoles[i].Workload</td>
+                                                <td>@Model.SolicitationRoles[i].DeliverableDeadline</td>
+                                                <td>@(Model.SolicitationRoles[i].HasContractor ? "Yes" : "No")</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -235,38 +243,43 @@
             addRole: function(e) {
                 e.preventDefault();
 
-                // todo, take values of fields in solicitation role inputs and create a role
-                var projectDeliverable = $("#projectDeliverableInput").val();
                 var description = $("#descriptionInput").val();
-                var workload = $("#workloadInput").val();
-                var deliverableDeadline = $("#deliverableDeadlineInput").val();
+                var projectDeliverable = $("#projectDeliverableInput").val();
                 var lumpSum = $("#lumpSumInput").val();
                 var hourlyRate = $("#hourlyRateInput").val();
                 var signBonus = $("#signBonusInput").val();
-
-                // add role to model
+                var deliverableDeadline = $("#deliverableDeadlineInput").val();
+                var workload = $("#workloadInput").val();
 
                 // add a line to table
-
                 var row = $("<tr>")
                     .append($("<td>")
-                        .html(projectDeliverable)
+                        .html(description)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles.Index" }).val(solicitationEdit.nextFreeIndex))
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Id" }).val(0))
-                    ).append($('<td>')
-                        .html(description)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Description" }).val(description))
+                    ).append($('<td>')
+                        .html(projectDeliverable)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].ProjectDeliverableId" }).val(projectDeliverable))
+                    ).append($('<td>')
+                        .html(lumpSum)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].LumpSum" }).val(lumpSum))
+                    ).append($('<td>')
+                        .html(hourlyRate)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].HourlyRate" }).val(hourlyRate))
+                    ).append($('<td>')
+                        .html(signBonus)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].SignBonus" }).val(signBonus))
+                    ).append($('<td>')
+                        .html(deliverableDeadline)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].DeliverableDeadline" }).val(deliverableDeadline))
                     ).append($('<td>')
                         .html(workload)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Workload" }).val(workload))
                     ).append($('<td>')
                         .append("No")
                     );
-                    //.append($("<td>", { "class": "text-center" })
-                    //    .append($("<button>", { type: "button", "class": "btn btn-default delete-date-button" })
-                    //        .append($("<span>", { "class": "glyphicon glyphicon-remove" }))
-                    //    )
-                    //);
+
                 $("#SolicitationRoleTable").append(row);
 
                 // clear inputs
@@ -277,6 +290,8 @@
                 $("#lumpSumInput").val('');
                 $("#hourlyRateInput").val('');
                 $("#signBonusInput").val('');
+
+                solicitationEdit.nextFreeIndex++;
             }
         };
 

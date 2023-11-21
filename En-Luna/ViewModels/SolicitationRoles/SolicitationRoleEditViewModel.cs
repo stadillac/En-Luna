@@ -22,13 +22,12 @@ namespace En_Luna.ViewModels
         [DisplayName("Workload (Hours per Week)")]
         public double Workload { get; set; }
 
-        [Required]
         public string Description { get; set; } = string.Empty;
 
         [Required]
         [DisplayName("Deliverable Deadline")]
         [DataType(DataType.Date)]
-        public DateTime DeliverableDeadline { get; set; }
+        public DateTime DeliverableDeadline { get; set; } = DateTime.Now.AddMonths(1);
 
         [DisplayName("Contractor Terminated")]
         public bool ContractorTerminated { get; set; }
@@ -54,12 +53,12 @@ namespace En_Luna.ViewModels
         [Required]
         [DisplayName("Solicitation")]
         public int SolicitationId { get; set; }
-        public SelectList Solicitations { get; set; }
+        public SelectList? Solicitations { get; set; }
 
         [Required]
         [DisplayName("Project Deliverable")]
         public int ProjectDeliverableId { get; set; }
-        public SelectList ProjectDeliverables { get; set; }
+        public SelectList? ProjectDeliverables { get; set; }
 
         public List<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
 

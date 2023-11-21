@@ -13,6 +13,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.SolicitorId)
 
         <div class="row">
             <div class="col">
@@ -115,7 +116,6 @@
                     </div>
                     <div class="card-body">
                         @Html.HiddenFor(model => model.Id)
-                        @Html.HiddenFor(model => model.SolicitationRole.SolicitationId)
                         <div class="row">
                             <div class="col">
                                 <table class="table">
@@ -244,7 +244,9 @@
                 e.preventDefault();
 
                 var description = $("#descriptionInput").val();
-                var projectDeliverable = $("#projectDeliverableInput").val();
+                var projectDeliverableId = $("#projectDeliverableInput").val();
+                var projectDeliverable = $("#projectDeliverableInput option:selected").text();
+
                 var lumpSum = $("#lumpSumInput").val();
                 var hourlyRate = $("#hourlyRateInput").val();
                 var signBonus = $("#signBonusInput").val();
@@ -260,7 +262,7 @@
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].Description" }).val(description))
                     ).append($('<td>')
                         .html(projectDeliverable)
-                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].ProjectDeliverableId" }).val(projectDeliverable))
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].ProjectDeliverableId" }).val(projectDeliverableId))
                     ).append($('<td>')
                         .html(lumpSum)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].LumpSum" }).val(lumpSum))

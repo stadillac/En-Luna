@@ -4,6 +4,7 @@ using En_Luna.Data.Services;
 using En_Luna.Extensions;
 using En_Luna.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using X.PagedList;
@@ -19,15 +20,17 @@ namespace En_Luna.Controllers
         private readonly IProjectDeliverableService _projectDeliverableService;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;
+        private readonly UserManager<User> _userManager;
 
         public SolicitationsController(IMapper mapper, IDeadlineTypeService deadlineTypeService, IProjectDeliverableService projectDeliverableService,
-            ISolicitationService solicitationService, IStateService stateService)
+            ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
         {
             _mapper = mapper;
             _deadlineTypeService = deadlineTypeService;
             _projectDeliverableService = projectDeliverableService;
             _solicitationService = solicitationService;
             _stateService = stateService;
+            _userManager = userManager;
         }
 
         [HttpGet("{id:int}/{page:int?}")]
@@ -48,8 +51,16 @@ namespace En_Luna.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var isSolicitor = await _userManager.IsInRoleAsync(user, "Solicitor");
+            
+            if (!isSolicitor || user.SolicitorId == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             Solicitation? solicitation = id.HasValue
                 ? _solicitationService.Get(x => x.Id == id.Value)
                 : new Solicitation();
@@ -58,6 +69,8 @@ namespace En_Luna.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            solicitation.SolicitorId = user.SolicitorId.Value;
 
             SolicitationEditViewModel model = _mapper.Map<SolicitationEditViewModel>(solicitation);
             InstantiateSelectLists(model);

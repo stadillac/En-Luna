@@ -9,7 +9,10 @@ namespace Jobbie.Web.Mapping
         public SolicitationProfile()
         {
             CreateMap<Solicitation, SolicitationViewModel>().ReverseMap();
-            CreateMap<SolicitationEditViewModel, Solicitation>();
+            CreateMap<SolicitationEditViewModel, Solicitation>()
+                .ForMember(dest => dest.Roles, opt => opt.MapFrom(
+                    x => x.SolicitationRoles
+                ));
             CreateMap<Solicitation, SolicitationEditViewModel>()
                 .ForMember(dest => dest.States, opt => opt.Ignore());
         }

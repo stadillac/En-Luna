@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +9,9 @@ namespace En_Luna.ViewModels
     public class SolicitationEditViewModel
     {
         public int Id { get; set; }
+
+        [Required]
+        public int SolicitorId { get; set; }
 
         [Required]
         [DisplayName("Start Date")]
@@ -25,10 +30,10 @@ namespace En_Luna.ViewModels
         [Required]
         [DisplayName("Estimated End Date")]
         [DataType(DataType.Date)]
-        public DateTime EstimatedEndDate { get; set; }
+        public DateTime EstimatedEndDate { get; set; } = DateTime.Now;
 
         [DisplayName("Team Meeting Time")]
-        public DateTime TeamMeetingTime { get; set; }
+        public DateTime TeamMeetingTime { get; set; } = DateTime.Now;
 
         [DisplayName("Active")]
         public bool IsActive { get; set; }
@@ -48,10 +53,36 @@ namespace En_Luna.ViewModels
 
         public SelectList? States { get; set; }
 
+        [BindNever]
         public SolicitationRoleEditViewModel SolicitationRole { get; set; } = new();
 
         public List<SolicitationRoleViewModel> SolicitationRoles { get; set; } = new List<SolicitationRoleViewModel>();
 
         public SolicitationDeadlineEditViewModel SolicitationDeadline { get; set; } = new();
+    }
+
+    public class Test
+    {
+        [DisplayName("Lump Sum")]
+        public double LumpSum { get; set; }
+
+        [DisplayName("Hourly Rate")]
+        public double HourlyRate { get; set; }
+
+        [DisplayName("Sign-on Bonus")]
+        public double SignBonus { get; set; }
+
+        [DisplayName("Workload (Hours per Week)")]
+        public double Workload { get; set; }
+
+        public string Description { get; set; } = string.Empty;
+
+        [DisplayName("Deliverable Deadline")]
+        [DataType(DataType.Date)]
+        public DateTime DeliverableDeadline { get; set; }
+
+        [DisplayName("Project Deliverable")]
+        public int ProjectDeliverableId { get; set; }
+        public SelectList? ProjectDeliverables { get; set; }
     }
 }

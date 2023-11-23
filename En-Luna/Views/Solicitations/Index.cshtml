@@ -56,10 +56,11 @@
                         <td></td>
                         <td></td>
                         <td>
-                            <a href="/Solicitations/Edit/@item.Id" class="btn btn-primary">Edit</a>
+
+                            <a class="btn btn-primary" asp-controller="Solicitations" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         </td>
                         <td>
-                            <a href="javascript:void(0);" class="btn btn-danger" onclick="softDelete('/Admin/Solicitations/Delete', @item.Id, this)">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-danger" onclick="softDelete('/Solicitations/Deactivate', @item.Id, this)">Delete</a>
                         </td>
                     </tr>
                 }

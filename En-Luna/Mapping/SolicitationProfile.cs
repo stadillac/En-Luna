@@ -14,7 +14,10 @@ namespace Jobbie.Web.Mapping
                     x => x.SolicitationRoles
                 ));
             CreateMap<Solicitation, SolicitationEditViewModel>()
-                .ForMember(dest => dest.States, opt => opt.Ignore());
+                .ForMember(dest => dest.States, opt => opt.Ignore())
+                .ForMember(dest => dest.SolicitationRoles, opt => opt.MapFrom(
+                    x => x.Roles
+                ));
         }
     }
 }

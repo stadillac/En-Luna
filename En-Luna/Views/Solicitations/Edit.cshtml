@@ -140,12 +140,12 @@
                                                 @Html.HiddenFor(model => model.SolicitationRoles[i].Id)
                                                 @*@form.Hidden("ObservanceDates.Index", i.ToString())*@
                                                 <td>@Model.SolicitationRoles[i].Description</td>
-                                                <td>@Model.SolicitationRoles[i].ProjectDeliverableId</td>
+                                                <td>@Model.SolicitationRoles[i].ProjectDeliverable?.Name</td>
                                                 <td>@Model.SolicitationRoles[i].LumpSum</td>
                                                 <td>@Model.SolicitationRoles[i].HourlyRate</td>
                                                 <td>@Model.SolicitationRoles[i].SignBonus</td>
-                                                <td>@Model.SolicitationRoles[i].Workload</td>
                                                 <td>@Model.SolicitationRoles[i].DeliverableDeadline</td>
+                                                <td>@Model.SolicitationRoles[i].Workload</td>
                                                 <td>@(Model.SolicitationRoles[i].HasContractor ? "Yes" : "No")</td>
                                             </tr>
                                         }

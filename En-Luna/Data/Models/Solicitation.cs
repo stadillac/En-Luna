@@ -59,6 +59,14 @@ namespace En_Luna.Data.Models
         public bool IsCancelled { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [pending approval].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [pending approval]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PendingApproval { get; set; }
+
+        /// <summary>
         /// Gets or sets the start date.
         /// </summary>
         /// <value>

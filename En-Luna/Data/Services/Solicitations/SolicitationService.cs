@@ -1,4 +1,7 @@
 ﻿using En_Luna.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace En_Luna.Data.Services
 {
@@ -7,6 +10,14 @@ namespace En_Luna.Data.Services
     {
         public SolicitationService(ApplicationContext context) : base(context)
         {
+        }
+
+        public override Solicitation? Get(Expression<Func<Solicitation, bool>> predicate)
+        {
+            return _context.Solicitations
+                .Where(predicate)
+                .Include(x => x.Roles)
+                .FirstOrDefault();
         }
 
         /// <inheritdoc />

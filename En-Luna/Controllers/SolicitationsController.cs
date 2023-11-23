@@ -72,6 +72,9 @@ namespace En_Luna.Controllers
 
             solicitation.SolicitorId = user.SolicitorId.Value;
 
+            // marked pending approval until the admin approves the solicitation
+            solicitation.PendingApproval = true;
+
             SolicitationEditViewModel model = _mapper.Map<SolicitationEditViewModel>(solicitation);
             InstantiateSelectLists(model);
 

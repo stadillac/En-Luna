@@ -28,8 +28,8 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-      - name: dotnet install ef
-        run: dotnet tool install -g dotnet-ef
+      - name: dotnet install ef --version 7.0.11
+        run: dotnet tool install -g dotnet-ef --version 7.0.11
 
       - name: dotnet bundle migration
         run: dotnet ef migrations bundle --runtime linux-x64 -p En-Luna/En-Luna.csproj -o ${{env.DOTNET_ROOT}}/myapp/migrate

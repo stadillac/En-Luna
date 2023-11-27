@@ -202,10 +202,10 @@ namespace En_Luna.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                await HandleRoles(user);
-
                 if (result.Succeeded)
                 {
+                    await HandleRoles(user);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

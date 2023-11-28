@@ -26,6 +26,11 @@ namespace En_Luna.Data.Models
         public int ProjectDeliverableId  { get; set; }
 
         /// <summary>
+        /// Gets or sets the required profession discipline identifier.
+        /// </summary>
+        public int? RequiredProfessionDisciplineId {  get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance has contractor.
         /// </summary>
         /// <value>
@@ -151,6 +156,10 @@ namespace En_Luna.Data.Models
         /// </value>
         public virtual ProjectDeliverable? ProjectDeliverable { get; set; }
         
+        /// <summary>
+        /// Gets or sets the required profession discipline.
+        /// </summary>
+        public virtual ProfessionDiscipline? RequiredProfessionDiscipline { get; set; }
         /// <summary>
         /// Gets or sets the reviews.
         /// </summary>

@@ -30,6 +30,10 @@ namespace En_Luna.Data.Services
         /// <returns></returns>
         public T? Get(Expression<Func<T, bool>> predicate);
 
+        public T? Get<TProperty>(Expression<Func<T, TProperty>> include, Expression<Func<T, bool>> predicate);
+
+        public T? Get(string navigationalPath, Expression<Func<T, bool>> predicate);
+
         /// <summary>
         /// Lists the specified entities.
         /// </summary>
@@ -42,6 +46,8 @@ namespace En_Luna.Data.Services
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         public ICollection<T> List(Expression<Func<T, bool>> predicate);
+
+        public ICollection<T> List<TProperty>(Expression<Func<T, TProperty>> include, Expression<Func<T, bool>> predicate);
 
         /// <summary>
         /// Updates the specified entity.

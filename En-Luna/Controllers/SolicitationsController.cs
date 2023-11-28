@@ -105,6 +105,28 @@ namespace En_Luna.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Search(int? page)
+        {
+            IEnumerable<Solicitation> solicitations = _solicitationService.List(x => 
+                x.IsActive
+                && x.IsApproved
+                && !x.IsDeleted
+                && !x.IsCancelled
+                && !x.IsComplete
+            );
+
+            IPagedList<SolicitationViewModel> solicitationViewModels = solicitations
+                .ToPagedList(page ?? 1, Constants.Constants.PageSize)
+                .Map<Solicitation, SolicitationViewModel>(_mapper);
+
+            SolicitationIndexViewModel model = new SolicitationIndexViewModel
+            {
+                Solicitations = solicitationViewModels
+            };
+
+            return View(model);
+        }
+
         public JsonResult Activate(int id)
         {
             //todo add logic that informs admin of activity

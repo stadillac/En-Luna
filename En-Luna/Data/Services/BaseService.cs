@@ -1,5 +1,6 @@
 ﻿using En_Luna.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using System.Linq.Expressions;
 
 namespace En_Luna.Data.Services
@@ -37,6 +38,16 @@ namespace En_Luna.Data.Services
             return _context.Set<T>().Where(predicate).FirstOrDefault();
         }
 
+        public virtual T? Get<TProperty>(Expression<Func<T, TProperty>> include, Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Include(include).Where(predicate).FirstOrDefault();
+        }
+
+        public virtual T? Get(string navigationalPath, Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Include(navigationalPath).Where(predicate).FirstOrDefault();
+        }
+
         /// <inheritdoc />
         public virtual ICollection<T> List()
         {
@@ -47,6 +58,11 @@ namespace En_Luna.Data.Services
         public virtual ICollection<T> List(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate).ToList();
+        }
+
+        public virtual ICollection<T> List<TProperty>(Expression<Func<T, TProperty>> include, Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Include(include).Where(predicate).ToList();
         }
 
         /// <inheritdoc />

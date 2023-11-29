@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using En_Luna.Data.Models;
 using En_Luna.Data.Services;
+using En_Luna.Email;
 using En_Luna.Extensions;
 using En_Luna.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -17,15 +18,19 @@ namespace En_Luna.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IDeadlineTypeService _deadlineTypeService;
+        private readonly IEmailSender _emailSender;
         private readonly IProjectDeliverableService _projectDeliverableService;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;
         private readonly UserManager<User> _userManager;
 
-        public SolicitationsController(IMapper mapper, IDeadlineTypeService deadlineTypeService, IProjectDeliverableService projectDeliverableService,
+        private readonly string[] _toAddresses = new string[] { "enluna.info@gmail.com" };
+
+        public SolicitationsController(IMapper mapper, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, IProjectDeliverableService projectDeliverableService,
             ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
         {
             _mapper = mapper;
+            _emailSender = emailSender;
             _deadlineTypeService = deadlineTypeService;
             _projectDeliverableService = projectDeliverableService;
             _solicitationService = solicitationService;
@@ -62,7 +67,7 @@ namespace En_Luna.Controllers
             }
 
             Solicitation? solicitation = id.HasValue
-                ? _solicitationService.Get(x => x.Id == id.Value)
+                ? _solicitationService.Get("Roles.ProjectDeliverable", x => x.Id == id.Value)
                 : new Solicitation();
 
             if (solicitation == null)
@@ -71,9 +76,6 @@ namespace En_Luna.Controllers
             }
 
             solicitation.SolicitorId = user.SolicitorId.Value;
-
-            // marked pending approval until the admin approves the solicitation
-            solicitation.PendingApproval = true;
 
             SolicitationEditViewModel model = _mapper.Map<SolicitationEditViewModel>(solicitation);
             InstantiateSelectLists(model);
@@ -92,14 +94,33 @@ namespace En_Luna.Controllers
 
             if (model.Id != 0)
             {
-                Solicitation? solicitation = _solicitationService.Get(x => x.Id == model.Id);
+                Solicitation? solicitation = _solicitationService.Get("Roles.ProjectDeliverable", x => x.Id == model.Id);
                 _mapper.Map(model, solicitation);
                 _solicitationService.Update(solicitation);
+
+                // marked pending approval until the admin approves the solicitation
+                solicitation.PendingApproval = true;
+
+                var message = new Message(_toAddresses, 
+                    "Solicitation Updated", 
+                    "There is an existing solicitation updated that needs reviewed. TODO give this html markup"
+                );
+
+                _emailSender.SendEmail(message);
             }
             else
             {
                 Solicitation solicitation = _mapper.Map<Solicitation>(model);
                 _solicitationService.Create(solicitation);
+
+                solicitation.PendingApproval = true;
+
+                var message = new Message(_toAddresses,
+                    "New Solicitation Posted for Review",
+                    "There is a new solicitation posted that needs reviewed. TODO give this html markup"
+                );
+
+                _emailSender.SendEmail(message);
             }
 
             return RedirectToAction("Index");
@@ -197,7 +218,7 @@ namespace En_Luna.Controllers
                 _deadlineTypeService.List(),
                 "Id",
                 "Name",
-                model.SolicitationDeadline.DeadlineTypeId
+                model.SolicitationDeadline?.DeadlineTypeId ?? 0
             );
 
             model.SolicitationRole.ProjectDeliverables = new SelectList(

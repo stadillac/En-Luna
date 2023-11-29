@@ -22,6 +22,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddControllersWithViews();
 builder.Services.RegisterServices();
+builder.RegisterSettings();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpContextAccessor();
 

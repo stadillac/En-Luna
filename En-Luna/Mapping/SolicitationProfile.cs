@@ -12,12 +12,15 @@ namespace Jobbie.Web.Mapping
             CreateMap<SolicitationEditViewModel, Solicitation>()
                 .ForMember(dest => dest.Roles, opt => opt.MapFrom(
                     x => x.SolicitationRoles
-                ));
+                ))
+                .ForMember(dest => dest.Deadline, opt => opt.MapFrom(x => x.SolicitationDeadline));
+
             CreateMap<Solicitation, SolicitationEditViewModel>()
                 .ForMember(dest => dest.States, opt => opt.Ignore())
                 .ForMember(dest => dest.SolicitationRoles, opt => opt.MapFrom(
                     x => x.Roles
-                ));
+                ))
+                .ForMember(dest => dest.SolicitationDeadline, opt => opt.MapFrom(x => x.Deadline));
         }
     }
 }

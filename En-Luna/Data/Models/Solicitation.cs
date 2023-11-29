@@ -136,7 +136,7 @@ namespace En_Luna.Data.Models
         /// <value>
         /// The deadline.
         /// </value>
-        public virtual SolicitationDeadline? Deadline { get; set; }
+        public virtual SolicitationDeadline? Deadline { get; set; } = new();
 
         /// <summary>
         /// Navigational property. Gets or sets the contractors.

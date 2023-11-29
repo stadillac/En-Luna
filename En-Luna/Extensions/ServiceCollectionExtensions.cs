@@ -1,4 +1,7 @@
 ﻿using En_Luna.Data.Services;
+using En_Luna.Email;
+using En_Luna.Settings;
+using System.Configuration;
 
 namespace En_Luna.Extensions
 {
@@ -16,6 +19,7 @@ namespace En_Luna.Extensions
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IDisciplineService, DisciplineService>();
             services.AddScoped<IExpertiseService, ExpertiseService>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IFocusService, FocusService>();
             services.AddScoped<ILicenseService, LicenseService>();
             services.AddScoped<IProfessionDisciplineService, ProfessionDisciplineService>();
@@ -32,6 +36,15 @@ namespace En_Luna.Extensions
             services.AddScoped<ISolicitorService, SolicitorService>();
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IStateService, StateService>();
+        }
+
+        public static void RegisterSettings(this WebApplicationBuilder builder)
+        {
+            var emailConfig = builder.Configuration
+                .GetSection("EmailSettings")
+                .Get<EmailSettings>();
+
+            builder.Services.AddSingleton(emailConfig);
         }
     }
 }

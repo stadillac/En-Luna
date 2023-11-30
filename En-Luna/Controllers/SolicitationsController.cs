@@ -24,7 +24,7 @@ namespace En_Luna.Controllers
         private readonly IStateService _stateService;
         private readonly UserManager<User> _userManager;
 
-        private readonly string[] _toAddresses = new string[] { "enluna.info@gmail.com" };
+        private readonly string[] _toAddresses = new string[] { "enluna.info@gmail.com", "cstalde1@gmail.com" };
 
         public SolicitationsController(IMapper mapper, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, IProjectDeliverableService projectDeliverableService,
             ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
@@ -92,14 +92,14 @@ namespace En_Luna.Controllers
                 return View(model);
             }
 
+            // marked pending approval until the admin approves the solicitation
+            model.PendingApproval = true;
+
             if (model.Id != 0)
             {
                 Solicitation? solicitation = _solicitationService.Get("Roles.ProjectDeliverable", x => x.Id == model.Id);
                 _mapper.Map(model, solicitation);
                 _solicitationService.Update(solicitation);
-
-                // marked pending approval until the admin approves the solicitation
-                solicitation.PendingApproval = true;
 
                 var message = new Message(_toAddresses, 
                     "Solicitation Updated", 
@@ -112,8 +112,6 @@ namespace En_Luna.Controllers
             {
                 Solicitation solicitation = _mapper.Map<Solicitation>(model);
                 _solicitationService.Create(solicitation);
-
-                solicitation.PendingApproval = true;
 
                 var message = new Message(_toAddresses,
                     "New Solicitation Posted for Review",

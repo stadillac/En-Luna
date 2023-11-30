@@ -59,6 +59,7 @@ namespace En_Luna.ViewModels
         public List<SolicitationRoleViewModel> SolicitationRoles { get; set; } = new List<SolicitationRoleViewModel>();
 
         public SolicitationDeadlineEditViewModel SolicitationDeadline { get; set; } = new();
+        public bool PendingApproval { get; internal set; }
     }
 
     public class Test

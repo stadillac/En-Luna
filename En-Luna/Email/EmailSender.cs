@@ -1,9 +1,7 @@
 ﻿using En_Luna.Settings;
 using MailKit;
-using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
-using System.Net.NetworkInformation;
 
 namespace En_Luna.Email
 {
@@ -35,22 +33,11 @@ namespace En_Luna.Email
 
         private void Send(MimeMessage mailMessage)
         {
-            //var client = new SmtpClient(_emailConfig.SmtpServer, _emailConfig.Port)
-            //{
-            //    Credentials = new NetworkCredential(_emailConfig.UserName, "********2e70"),
-            //    EnableSsl = true
-            //};
-            //client.Send("from@example.com", "to@example.com", "Hello world", "testbody");
-            //Console.WriteLine("Sent");
-            //Console.ReadLine();
-
-            using (var client = new SmtpClient(new ProtocolLogger("smtp.log")))
+            using (var client = new MailKit.Net.Smtp.SmtpClient(new ProtocolLogger("smtp.log")))
             {
                 try
                 {
                     client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.StartTls);
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
                     client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
 
                     client.Send(mailMessage);

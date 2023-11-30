@@ -4,11 +4,12 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 xmlns="http://www.w3.org/1999/html">@ViewData["Title"]</h1>
 
 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
     <div class="form-horizontal">
-        <h2>Account</h2>
+        <!-- <h2>Account</h2> -->
+        <h6>Thanks for your interest in En-Luna! We are excited to work with you, but first, let's get to know each other. Please <a href="/#contact">contact us</a> to schedule a chat prior to creating an account.</h6>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(x => x.Input.Id)

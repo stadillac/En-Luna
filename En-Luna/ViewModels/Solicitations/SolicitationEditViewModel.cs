@@ -32,6 +32,7 @@ namespace En_Luna.ViewModels
         [DataType(DataType.Date)]
         public DateTime EstimatedEndDate { get; set; } = DateTime.Now;
 
+        [DataType(DataType.Time)]
         [DisplayName("Team Meeting Time")]
         public DateTime TeamMeetingTime { get; set; } = DateTime.Now;
 

@@ -41,7 +41,7 @@ namespace En_Luna.Controllers
         [HttpGet("{id:int}/{page:int?}")]
         public IActionResult Index(int id, int? page)
         {
-            IEnumerable<Solicitation> solicitations = _solicitationService.List(x => x.SolicitorId == id);
+            IEnumerable<Solicitation> solicitations = _solicitationService.List(x => x.SolicitorId == id && x.IsActive);
 
             IPagedList<SolicitationViewModel> solicitationViewModels = solicitations
                 .ToPagedList(page ?? 1, Constants.Constants.PageSize)
@@ -121,7 +121,7 @@ namespace En_Luna.Controllers
                 _emailSender.SendEmail(message);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Solicitations", new { Id = model.SolicitorId });
         }
 
         public IActionResult Search(int? page)
@@ -162,6 +162,7 @@ namespace En_Luna.Controllers
             return Json(true);
         }
 
+        [HttpPost("Deactivate")]
         public JsonResult Deactivate(int id)
         {
             //todo add logic that informs admin of activity

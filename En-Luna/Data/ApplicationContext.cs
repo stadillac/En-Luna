@@ -98,8 +98,8 @@ namespace En_Luna.Data
 
                             // mark property as "don't touch"
                             // we don't want to update on a Modify operation
-                            entry.Property("CreatedDate").IsModified = false;
-                            entry.Property("CreatedBy").IsModified = false;
+                            //entry.Property("CreatedDate").IsModified = false;
+                            //entry.Property("CreatedBy").IsModified = false;
                             break;
 
                         case EntityState.Added:

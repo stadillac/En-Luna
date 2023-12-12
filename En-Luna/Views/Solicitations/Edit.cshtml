@@ -127,6 +127,7 @@
                                         <tr>
                                             <th scope="col">Description</th>
                                             <th scope="col">Project Deliverable</th>
+                                            <th scope="col">Profession Discipline</th>
                                             <th scope="col">Lump Sum</th>
                                             <th scope="col">Hourly Rate</th>
                                             <th scope="col">Sign Bonus</th>
@@ -141,9 +142,12 @@
                                             <tr>
                                                 @Html.HiddenFor(model => model.SolicitationRoles[i].Id)
                                                 @Html.HiddenFor(model => model.SolicitationRoles[i].ProjectDeliverableId)
-                                                @*@form.Hidden("ObservanceDates.Index", i.ToString())*@
+                                                @Html.HiddenFor(model => model.SolicitationRoles[i].RequiredProfessionDisciplineId)
                                                 <td>@Model.SolicitationRoles[i].Description</td>
                                                 <td>@Model.SolicitationRoles[i].ProjectDeliverable?.Name</td>
+                                                <td>
+                                                    @($"{Model.SolicitationRoles[i].RequiredProfessionDiscipline?.ProfessionName} - {Model.SolicitationRoles[i].RequiredProfessionDiscipline?.DisciplineName}")
+                                                </td>
                                                 <td>@Model.SolicitationRoles[i].LumpSum</td>
                                                 <td>@Model.SolicitationRoles[i].HourlyRate</td>
                                                 <td>@Model.SolicitationRoles[i].SignBonus</td>
@@ -163,6 +167,13 @@
                                     @Html.LabelFor(model => model.SolicitationRole.ProjectDeliverableId, htmlAttributes: new { @class = "control-label" })
                                     @Html.DropDownListFor(model => model.SolicitationRole.ProjectDeliverableId, Model.SolicitationRole.ProjectDeliverables, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control", @id="projectDeliverableInput" })
                                     @Html.ValidationMessageFor(model => model.SolicitationRole.ProjectDeliverableId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SolicitationRole.RequiredProfessionDisciplineId, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.SolicitationRole.RequiredProfessionDisciplineId, Model.SolicitationRole.ProfessionDisciplines, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control", @id="requiredProfessionDisciplineInput" })
+                                    @Html.ValidationMessageFor(model => model.SolicitationRole.RequiredProfessionDisciplineId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -248,7 +259,9 @@
 
                 var description = $("#descriptionInput").val();
                 var projectDeliverableId = $("#projectDeliverableInput").val();
+                var requiredProfessionDisciplineId = $("#requiredProfessionDisciplineInput").val();
                 var projectDeliverable = $("#projectDeliverableInput option:selected").text();
+                var requiredProfessionDiscipline = $("#requiredProfessionDisciplineInput option:selected").text();
 
                 var lumpSum = $("#lumpSumInput").val();
                 var hourlyRate = $("#hourlyRateInput").val();
@@ -266,6 +279,9 @@
                     ).append($('<td>')
                         .html(projectDeliverable)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].ProjectDeliverableId" }).val(projectDeliverableId))
+                    ).append($('<td>')
+                        .html(requiredProfessionDiscipline)
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].RequiredProfessionDisciplineId" }).val(requiredProfessionDisciplineId))
                     ).append($('<td>')
                         .html(lumpSum)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].LumpSum" }).val(lumpSum))
@@ -289,6 +305,7 @@
 
                 // clear inputs
                 $("#projectDeliverableInput").prop('selectedIndex', 0);
+                $("#requiredProfessionDisciplineInput").prop('selectedIndex', 0);
                 $("#descriptionInput").val('');
                 $("#workloadInput").val('');
                 $("#deliverableDeadlineInput").val('');

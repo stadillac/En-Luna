@@ -7,6 +7,7 @@ namespace En_Luna.ViewModels
         public int Id { get; set; }
         public int SolicitationId { get; set; }
         public int ProjectDeliverableId { get; set; }
+        public int? RequiredProfessionDisciplineId { get; set; }
         public bool HasContractor { get; set; }
         public bool IsComplete { get; set; }
         public bool IsCancelled { get; set; }
@@ -22,6 +23,7 @@ namespace En_Luna.ViewModels
         public bool ContractorPaid { get; set; }
         public SolicitationViewModel? Solicitation { get; set; }
         public ProjectDeliverableViewModel? ProjectDeliverable { get; set; }
+        public ProfessionDisciplineViewModel RequiredProfessionDiscipline { get; set; } = new();
         public virtual ICollection<ReviewViewModel> Reviews { get; set; } = new Collection<ReviewViewModel>();
         public virtual ICollection<SoftwareViewModel> RequiredSoftware { get; set; } = new Collection<SoftwareViewModel>();
         public virtual ICollection<SoftwareViewModel> ProvidedSoftware { get; set; } = new Collection<SoftwareViewModel>();

@@ -57,8 +57,13 @@ namespace En_Luna.ViewModels
 
         [Required]
         [DisplayName("Project Deliverable")]
-        public int ProjectDeliverableId { get; set; }
+        public int? ProjectDeliverableId { get; set; }
         public SelectList? ProjectDeliverables { get; set; }
+        
+        [Required]
+        [DisplayName("Profession Discipline")]
+        public int? RequiredProfessionDisciplineId { get; set; }
+        public SelectList? ProfessionDisciplines { get; set; }
 
         public List<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
 

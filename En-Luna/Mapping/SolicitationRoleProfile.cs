@@ -11,10 +11,13 @@ namespace Jobbie.Web.Mapping
             CreateMap<SolicitationRole, SolicitationRoleViewModel>().ReverseMap();
             CreateMap<SolicitationRole, SolicitationRoleEditViewModel>().ReverseMap();
             CreateMap<SolicitationRole, SolicitationRoleViewModel>()
-                .ForMember(dest => dest.ProjectDeliverable, opt => opt.MapFrom(x => x.ProjectDeliverable)); 
+                .ForMember(dest => dest.ProjectDeliverable, opt => opt.MapFrom(x => x.ProjectDeliverable))
+                .ForMember(dest => dest.RequiredProfessionDiscipline, opt => opt.MapFrom(x => x.RequiredProfessionDiscipline)); 
         
             CreateMap<SolicitationRoleViewModel, SolicitationRole>()
-                .ForMember(dest => dest.ProjectDeliverable, opt => opt.MapFrom(x => x.ProjectDeliverable)); 
+                .ForMember(dest => dest.ProjectDeliverable, opt => opt.MapFrom(x => x.ProjectDeliverable))
+                .ForMember(dest => dest.RequiredProfessionDiscipline, opt => opt.MapFrom(x => x.RequiredProfessionDiscipline));
+            
         
         }
     }

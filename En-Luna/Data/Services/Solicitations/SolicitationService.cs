@@ -14,7 +14,11 @@ namespace En_Luna.Data.Services
 
         public override Solicitation? Get(string navigationalPath, Expression<Func<Solicitation, bool>> predicate)
         {
-            return _context.Solicitations.Include(navigationalPath).Include("Deadline.DeadlineType").Where(predicate).FirstOrDefault();
+            return _context.Solicitations.Include(navigationalPath)
+                .Include("Deadline.DeadlineType")
+                .Include("Roles.RequiredProfessionDiscipline")
+                .Where(predicate)
+                .FirstOrDefault();
         }
 
         public override Solicitation? Get(Expression<Func<Solicitation, bool>> predicate)

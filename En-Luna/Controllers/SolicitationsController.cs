@@ -19,6 +19,7 @@ namespace En_Luna.Controllers
         private readonly IMapper _mapper;
         private readonly IDeadlineTypeService _deadlineTypeService;
         private readonly IEmailSender _emailSender;
+        private readonly IProfessionDisciplineService _professionDisciplineService;
         private readonly IProjectDeliverableService _projectDeliverableService;
         private readonly ISolicitationService _solicitationService;
         private readonly IStateService _stateService;
@@ -26,12 +27,14 @@ namespace En_Luna.Controllers
 
         private readonly string[] _toAddresses = new string[] { "enluna.info@gmail.com", "cstalde1@gmail.com" };
 
-        public SolicitationsController(IMapper mapper, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, IProjectDeliverableService projectDeliverableService,
+        public SolicitationsController(IMapper mapper, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, 
+            IProfessionDisciplineService professionDisciplineService, IProjectDeliverableService projectDeliverableService,
             ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
         {
             _mapper = mapper;
             _emailSender = emailSender;
             _deadlineTypeService = deadlineTypeService;
+            _professionDisciplineService = professionDisciplineService;
             _projectDeliverableService = projectDeliverableService;
             _solicitationService = solicitationService;
             _stateService = stateService;
@@ -225,6 +228,13 @@ namespace En_Luna.Controllers
                 "Id", 
                 "Name", 
                 model.SolicitationRole.ProjectDeliverableId
+            );
+
+            model.SolicitationRole.ProfessionDisciplines = new SelectList(
+                _professionDisciplineService.List(), 
+                "Id", 
+                "Name", 
+                model.SolicitationRole.RequiredProfessionDisciplineId
             );
 
             model.States = new SelectList(_stateService.List(), "Id", "Name", model.StateId);

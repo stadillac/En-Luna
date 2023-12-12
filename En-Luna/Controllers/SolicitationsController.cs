@@ -17,6 +17,7 @@ namespace En_Luna.Controllers
     public class SolicitationsController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IContractorService _contractorService;
         private readonly IDeadlineTypeService _deadlineTypeService;
         private readonly IEmailSender _emailSender;
         private readonly IProfessionDisciplineService _professionDisciplineService;
@@ -27,11 +28,12 @@ namespace En_Luna.Controllers
 
         private readonly string[] _toAddresses = new string[] { "enluna.info@gmail.com", "cstalde1@gmail.com" };
 
-        public SolicitationsController(IMapper mapper, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, 
+        public SolicitationsController(IMapper mapper, IContractorService contractorService, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, 
             IProfessionDisciplineService professionDisciplineService, IProjectDeliverableService projectDeliverableService,
             ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
         {
             _mapper = mapper;
+            _contractorService = contractorService;
             _emailSender = emailSender;
             _deadlineTypeService = deadlineTypeService;
             _professionDisciplineService = professionDisciplineService;
@@ -127,14 +129,23 @@ namespace En_Luna.Controllers
             return RedirectToAction("Index", "Solicitations", new { Id = model.SolicitorId });
         }
 
-        public IActionResult Search(int? page)
+        [HttpGet("Search/{contractorId:int}/{page:int}")]
+        public IActionResult Search(int contractorId, int? page)
         {
-            IEnumerable<Solicitation> solicitations = _solicitationService.List(x => 
+            var contractor = _contractorService.Get(x => x.Id == contractorId);
+
+            if (contractor == null) 
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            IEnumerable<Solicitation> solicitations = _solicitationService.List(x => x.Roles, x => 
                 x.IsActive
                 && x.IsApproved
                 && !x.IsDeleted
                 && !x.IsCancelled
                 && !x.IsComplete
+                && x.Roles.Select(r => r.RequiredProfessionDisciplineId).Contains(contractor.ProfessionDisciplineId)
             );
 
             IPagedList<SolicitationViewModel> solicitationViewModels = solicitations

@@ -1,7 +1,12 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+
 @{
     ViewData["Title"] = "Contracts";
     ViewData["AddContainer"] = true;
+    var user = await UserManager.GetUserAsync(User);
 }
+
+<a href="@($"/Solicitations/Search/{user.ContractorId}/1")">Search for Open Contracts</a>
 
 <h1>This is where we will list all active contracts the contractor has accepted</h1>

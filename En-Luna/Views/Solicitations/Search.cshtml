@@ -1,7 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model SolicitationIndexViewModel
+
 @{
+    ViewData["Title"] = "Contracts";
+    ViewData["AddContainer"] = true;
 }
 
-<h1>TODO: Display cards of each open contract</h1>
+<div class="row">
+    @if (!Model.Solicitations.Any())
+    {
+        <div class="col">
+            <h2>No open contracts found.</h2>
+        </div>
+    }
+    else
+    {
+        @foreach (var solicitation in Model.Solicitations)
+        {
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -43,7 +43,7 @@ function softDelete(targetUrl, targetId, elem) {
     });
 }
 
-function verify(targetUrl, targetId, elem) {
+function ajaxPost(targetUrl, targetId, elem) {
     var row = elem.closest('tr');
     var obj = $(elem).parent().parent();
 
@@ -55,13 +55,13 @@ function verify(targetUrl, targetId, elem) {
 
             $('#successful-toast').toast('show');
 
-            obj.fadeTo(10, 1, () => {
-                obj.children('td', 'th')
-                    .animate({ 'padding-top': '0', 'padding-bottom': '0' })
-                    .wrapInner('<div />')
-                    .children()
-                    .slideUp(100, () => { obj.remove(); });
-            });
+            //obj.fadeTo(10, 1, () => {
+            //    obj.children('td', 'th')
+            //        .animate({ 'padding-top': '0', 'padding-bottom': '0' })
+            //        .wrapInner('<div />')
+            //        .children()
+            //        .slideUp(100, () => { obj.remove(); });
+            //});
         },
         error: function (data) {
             $('#failed-toast').toast('show');

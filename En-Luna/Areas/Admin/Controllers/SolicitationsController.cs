@@ -147,6 +147,9 @@ namespace Jobbie.Web.Areas.Admin.Controllers
 
         public JsonResult Approve(int id, bool isApproved)
         {
+            // todo send approved in ajax post
+            isApproved = true;
+
             Solicitation? solicitation = _solicitationService.Get(x => x.Id == id);
 
             if (solicitation == null)

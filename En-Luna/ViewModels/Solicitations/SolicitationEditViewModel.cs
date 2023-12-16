@@ -13,6 +13,9 @@ namespace En_Luna.ViewModels
         [Required]
         public int SolicitorId { get; set; }
 
+        public string Title { get; set; }
+
+        public string Description { get; set; } = string.Empty;
         [Required]
         [DisplayName("Start Date")]
         [DataType(DataType.Date)]
@@ -23,7 +26,7 @@ namespace En_Luna.ViewModels
 
         [Required]
         public string County { get; set; } = string.Empty;
-        
+
         [DisplayName("Shared Drive Url")]
         public string SharedDriveUrl { get; set; } = string.Empty;
 
@@ -66,30 +69,5 @@ namespace En_Luna.ViewModels
 
         public SolicitationDeadlineEditViewModel SolicitationDeadline { get; set; } = new();
         public bool PendingApproval { get; internal set; }
-    }
-
-    public class Test
-    {
-        [DisplayName("Lump Sum")]
-        public double LumpSum { get; set; }
-
-        [DisplayName("Hourly Rate")]
-        public double HourlyRate { get; set; }
-
-        [DisplayName("Sign-on Bonus")]
-        public double SignBonus { get; set; }
-
-        [DisplayName("Workload (Hours per Week)")]
-        public double Workload { get; set; }
-
-        public string Description { get; set; } = string.Empty;
-
-        [DisplayName("Deliverable Deadline")]
-        [DataType(DataType.Date)]
-        public DateTime DeliverableDeadline { get; set; }
-
-        [DisplayName("Project Deliverable")]
-        public int ProjectDeliverableId { get; set; }
-        public SelectList? ProjectDeliverables { get; set; }
     }
 }

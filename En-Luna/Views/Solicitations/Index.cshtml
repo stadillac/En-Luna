@@ -52,11 +52,10 @@
                         <td>@item.StartDate.ToShortDateString()</td>
                         <td>@item.Description</td>
                         <td><i class="bi @(item.IsActive ? "bi-check2-square" : "bi-app")"></i></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><i class="bi @(item.IsApproved ? "bi-check2-square" : "bi-app")"></i></td>
+                        <td><i class="bi @(item.IsComplete ? "bi-check2-square" : "bi-app")"></i></td>
+                        <td><i class="bi @(item.IsCancelled ? "bi-check2-square" : "bi-app")"></i></td>
                         <td>
-
                             <a class="btn btn-primary" asp-controller="Solicitations" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         </td>
                         <td>

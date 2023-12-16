@@ -55,12 +55,10 @@ namespace En_Luna.ViewModels
         public int SolicitationId { get; set; }
         public SelectList? Solicitations { get; set; }
 
-        [Required]
         [DisplayName("Project Deliverable")]
         public int? ProjectDeliverableId { get; set; }
         public SelectList? ProjectDeliverables { get; set; }
         
-        [Required]
         [DisplayName("Profession Discipline")]
         public int? RequiredProfessionDisciplineId { get; set; }
         public SelectList? ProfessionDisciplines { get; set; }

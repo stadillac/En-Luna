@@ -17,6 +17,11 @@ namespace En_Luna.Data.Models
         public int SolicitorId { get; set; }
 
         /// <summary>
+        /// Gets or sets the solicitation title.
+        /// </summary>
+        public string? Title { get; set; }
+
+        /// <summary>
         /// Gets or sets the description.
         /// </summary>
         /// <value>
@@ -121,6 +126,11 @@ namespace En_Luna.Data.Models
         /// The team meeting time.
         /// </value>
         public DateTime TeamMeetingTime { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Gets or sets the timezone for the team meeting time.
+        /// </summary>
+        public string? TimeZone { get; set; }
 
         /// <summary>
         /// Navigational property. Gets or sets the solicitor.

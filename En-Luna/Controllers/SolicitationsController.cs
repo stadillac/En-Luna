@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using X.PagedList;
 
 namespace En_Luna.Controllers
@@ -99,6 +100,7 @@ namespace En_Luna.Controllers
 
             // marked pending approval until the admin approves the solicitation
             model.PendingApproval = true;
+            model.TeamMeetingTime = TimeZoneInfo.ConvertTime(model.TeamMeetingTime, TimeZoneInfo.FindSystemTimeZoneById(model.TimeZone));
 
             if (model.Id != 0)
             {
@@ -249,6 +251,7 @@ namespace En_Luna.Controllers
             );
 
             model.States = new SelectList(_stateService.List(), "Id", "Name", model.StateId);
+            model.TimeZones = new SelectList(TimeZoneInfo.GetSystemTimeZones(), "Id", "DisplayName");
         }
 
     }

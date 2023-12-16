@@ -36,6 +36,11 @@ namespace En_Luna.ViewModels
         [DisplayName("Team Meeting Time")]
         public DateTime TeamMeetingTime { get; set; } = DateTime.Now;
 
+        [DisplayName("Time Zone")]
+        [Required]
+        public string? TimeZone { get; set; }
+        public SelectList? TimeZones { get; set; }
+
         [DisplayName("Active")]
         public bool IsActive { get; set; }
 

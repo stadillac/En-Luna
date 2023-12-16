@@ -40,9 +40,13 @@
                                     @Html.EditorFor(model => model.TeamMeetingTime, new { htmlAttributes = new { @type = "time", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.TeamMeetingTime, "", new { @class = "text-danger" })
                                 </div>
-
-                                <!--TODO ADD TIME ZONE-->
-
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TimeZone, htmlAttributes: new { @class = "control-label" })
+                                    @Html.DropDownListFor(model => model.TimeZone, Model.TimeZones, En_Luna.Constants.Constants.EmptySelectOptionText, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TimeZone, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
                         <div class="row">

@@ -1,9 +1,12 @@
 ﻿@using En_Luna.ViewModels
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
 @model SolicitationIndexViewModel
 
 @{
     ViewData["Title"] = "Contracts";
     ViewData["AddContainer"] = true;
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <div class="row">
@@ -23,8 +26,8 @@
                         <h5 class="card-title">@solicitation.Title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@solicitation.Solicitor?.Account?.Username</h6>
                         <p class="card-text">@solicitation.Description</p>
-                        <a href="#" class="card-link">View</a>
-                        <a href="#" class="card-link">Apply</a>
+                        <a href="/Solicitations/View/@solicitation.Id" class="card-link">View</a>
+                        <a href="javascript:void(0);" class="card-link" onclick="modalPopup('/Solicitations/Apply/@solicitation.Id/@user.ContractorId')">Apply</a>
                     </div>
                 </div>
             </div>

@@ -12,20 +12,14 @@ namespace En_Luna.Data.Services
         {
         }
 
-        public override Solicitation? Get(string navigationalPath, Expression<Func<Solicitation, bool>> predicate)
-        {
-            return _context.Solicitations.Include(navigationalPath)
-                .Include("Deadline.DeadlineType")
-                .Include("Roles.RequiredProfessionDiscipline")
-                .Where(predicate)
-                .FirstOrDefault();
-        }
-
         public override Solicitation? Get(Expression<Func<Solicitation, bool>> predicate)
         {
             return _context.Solicitations
+                .Include("Solicitor.Account")
+                .Include("Deadline.DeadlineType")
+                .Include("Roles.RequiredProfessionDiscipline")
+                .Include("Roles.ProjectDeliverable")
                 .Where(predicate)
-                .Include(x => x.Roles)
                 .FirstOrDefault();
         }
 

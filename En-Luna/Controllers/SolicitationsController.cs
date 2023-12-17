@@ -73,7 +73,7 @@ namespace En_Luna.Controllers
             }
 
             Solicitation? solicitation = id.HasValue
-                ? _solicitationService.Get("Roles.ProjectDeliverable", x => x.Id == id.Value)
+                ? _solicitationService.Get(x => x.Id == id.Value)
                 : new Solicitation();
 
             if (solicitation == null)
@@ -104,7 +104,7 @@ namespace En_Luna.Controllers
 
             if (model.Id != 0)
             {
-                Solicitation? solicitation = _solicitationService.Get("Roles.ProjectDeliverable", x => x.Id == model.Id);
+                Solicitation? solicitation = _solicitationService.Get(x => x.Id == model.Id);
                 _mapper.Map(model, solicitation);
                 _solicitationService.Update(solicitation);
 
@@ -160,6 +160,27 @@ namespace En_Luna.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet("View/{solicitationId:int}")]
+        public async Task<IActionResult> View(int solicitationId)
+        {
+            Solicitation? solicitation = _solicitationService.Get(x => x.Id == solicitationId);
+
+            if (solicitation == null)
+            {
+                return RedirectToAction("Search");
+            }
+
+            SolicitationViewModel model = _mapper.Map<SolicitationViewModel>(solicitation);
+
+            return View(model);
+        }
+
+        [HttpGet("Apply/{solicitationId:int}/{contractorId:int}")]
+        public IActionResult Apply(int solicitationId, int contractorId)
+        {
+            return PartialView();
         }
 
         public JsonResult Activate(int id)

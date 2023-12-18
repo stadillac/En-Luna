@@ -60,9 +60,6 @@
         </div>
     </header>
     <main role="main" class="pb-3">
-        <partial name="_ToastSuccess" />
-        <partial name="_ToastFailure" />
-
         @{
             var isAdminPage = Context.Request.Path.ToString().Contains("Admin");
             var isIdentityPage = Context.Request.Path.ToString().Contains("Identity");
@@ -72,6 +69,8 @@
         @if (isAdminPage || isIdentityPage || addContainer)
         {
             <div class="container pt-5 mt-5">
+                <partial name="_ToastSuccess" />
+                <partial name="_ToastFailure" />
                 @RenderBody()
             </div>
         }

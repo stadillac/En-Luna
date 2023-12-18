@@ -304,6 +304,7 @@
                     ).append($('<td>')
                         .html(requiredProfessionDiscipline)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].RequiredProfessionDisciplineId" }).val(requiredProfessionDisciplineId))
+                        .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].RequiredProfessionDiscipline.Id" }).val(requiredProfessionDisciplineId))
                     ).append($('<td>')
                         .html(lumpSum)
                         .append($("<input>", { type: "hidden", name: "SolicitationRoles[" + solicitationEdit.nextFreeIndex + "].LumpSum" }).val(lumpSum))

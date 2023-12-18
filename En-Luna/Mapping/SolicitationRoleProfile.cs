@@ -16,7 +16,7 @@ namespace Jobbie.Web.Mapping
         
             CreateMap<SolicitationRoleViewModel, SolicitationRole>()
                 .ForMember(dest => dest.ProjectDeliverable, opt => opt.MapFrom(x => x.ProjectDeliverable))
-                .ForMember(dest => dest.RequiredProfessionDiscipline, opt => opt.MapFrom(x => x.RequiredProfessionDiscipline));
+                .ForMember(dest => dest.RequiredProfessionDiscipline, opt => opt.Ignore());
             
         
         }

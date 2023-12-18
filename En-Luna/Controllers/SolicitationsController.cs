@@ -183,6 +183,30 @@ namespace En_Luna.Controllers
             return PartialView();
         }
 
+
+        [HttpPost("Apply")]
+        public JsonResult Apply(int id)
+        {
+            var contractor = _contractorService.Get(x => x.Id == id);
+
+            if (contractor == null)
+            {
+                return Json(false);
+            }
+
+            // todo need to have the soliciation id so we know
+            // then we need to save application data to new table
+
+            var message = new Message(_toAddresses,
+                "Application Received",
+                "There is an application for solicitation. TODO give this html markup"
+            );
+
+            _emailSender.SendEmail(message);
+
+            return Json(true);
+        }
+
         public JsonResult Activate(int id)
         {
             //todo add logic that informs admin of activity

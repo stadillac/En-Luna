@@ -44,9 +44,6 @@ function softDelete(targetUrl, targetId, elem) {
 }
 
 function ajaxPost(targetUrl, targetId, elem) {
-    var row = elem.closest('tr');
-    var obj = $(elem).parent().parent();
-
     $.ajax({
         type: "POST",
         url: targetUrl,
@@ -67,6 +64,12 @@ function ajaxPost(targetUrl, targetId, elem) {
             $('#failed-toast').toast('show');
         }
     });
+}
+
+function sendApplication(userId) {
+    ajaxPost('/Solicitations/Apply', userId);
+
+    $('#myModal').modal('hide');
 }
 
 $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {

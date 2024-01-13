@@ -136,6 +136,24 @@ namespace En_Luna.Controllers
             return RedirectToAction("Index", "Solicitations", new { Id = model.SolicitorId });
         }
 
+        [HttpGet("Applicants/{id:int}/{page:int?}")]
+        public IActionResult Applicants(int id, int? page)
+        {
+            var solicitationRoles = _solicitationRoleService.List(x => x.SolicitationId == id);
+            var applications = _applicationService.List(x => solicitationRoles.Select(x => x.Id).Contains(x.SolicitationRoleId));
+
+            IPagedList<ApplicationViewModel> applicationsViewModels = applications
+                .ToPagedList(page ?? 1, Constants.Constants.PageSize)
+                .Map<Application, ApplicationViewModel>(_mapper);
+
+            ApplicationIndexViewModel model = new ApplicationIndexViewModel
+            {
+                Applications = applicationsViewModels
+            };
+
+            return View(model);
+        }
+
         [HttpGet("Search/{contractorId:int}/{page:int}")]
         public IActionResult Search(int contractorId, int? page)
         {

@@ -37,6 +37,7 @@ namespace En_Luna.ViewModels
 
         [DataType(DataType.Time)]
         [DisplayName("Team Meeting Time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:H:mm}")]
         public DateTime TeamMeetingTime { get; set; } = DateTime.Now;
 
         [DisplayName("Time Zone")]

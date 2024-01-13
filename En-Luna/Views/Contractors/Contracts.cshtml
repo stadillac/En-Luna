@@ -23,35 +23,36 @@
     </div>
 </div>
 
-<!--TODO Filters-->
-
-<div class="row mt-2">
-    <div class="col">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Estimated End Date</th>
-                    <th scope="col">Meeting Time</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (SolicitationViewModel item in Model.Solicitations)
-                {
+@if (Model.Solicitations.Any())
+{
+    <div class="row mt-2">
+        <div class="col">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@item.Title</td>
-                        <td>@item.StartDate</td>
-                        <td>@item.EstimatedEndDate</td>
-                        <td>@item.TeamMeetingTime</td>
-                        <td>
-                            <a class="btn btn-primary" asp-controller="Contractors" asp-action="Contract" asp-route-id="@item.Id">View Details</a>
-                        </td>
+                        <th scope="col">Title</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Estimated End Date</th>
+                        <th scope="col">Meeting Time</th>
+                        <th scope="col"></th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        @Html.PagedListPager(Model.Solicitations, page => Url.Action("Contracts", new { page }), En_Luna.Helpers.HtmlHelper.PagedListRenderOptions)
+                </thead>
+                <tbody>
+                    @foreach (SolicitationViewModel item in Model.Solicitations)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.StartDate</td>
+                            <td>@item.EstimatedEndDate</td>
+                            <td>@item.TeamMeetingTime</td>
+                            <td>
+                                <a class="btn btn-primary" asp-controller="Contractors" asp-action="Contract" asp-route-id="@item.Id">View Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model.Solicitations, page => Url.Action("Contracts", new { page }), En_Luna.Helpers.HtmlHelper.PagedListRenderOptions)
+        </div>
     </div>
-</div>
+}

@@ -7,6 +7,7 @@ using En_Luna.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using X.PagedList;
@@ -18,12 +19,14 @@ namespace En_Luna.Controllers
     public class SolicitationsController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IApplicationService _applicationService;
         private readonly IContractorService _contractorService;
         private readonly IDeadlineTypeService _deadlineTypeService;
         private readonly IEmailSender _emailSender;
         private readonly IProfessionDisciplineService _professionDisciplineService;
         private readonly IProjectDeliverableService _projectDeliverableService;
         private readonly ISolicitationService _solicitationService;
+        private readonly ISolicitationRoleService _solicitationRoleService;
         private readonly IStateService _stateService;
         private readonly UserManager<User> _userManager;
 
@@ -31,7 +34,7 @@ namespace En_Luna.Controllers
 
         public SolicitationsController(IMapper mapper, IContractorService contractorService, IEmailSender emailSender, IDeadlineTypeService deadlineTypeService, 
             IProfessionDisciplineService professionDisciplineService, IProjectDeliverableService projectDeliverableService,
-            ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager)
+            ISolicitationService solicitationService, IStateService stateService, UserManager<User> userManager, IApplicationService applicationService, ISolicitationRoleService solicitationRoleService)
         {
             _mapper = mapper;
             _contractorService = contractorService;
@@ -42,6 +45,8 @@ namespace En_Luna.Controllers
             _solicitationService = solicitationService;
             _stateService = stateService;
             _userManager = userManager;
+            _applicationService = applicationService;
+            _solicitationRoleService = solicitationRoleService;
         }
 
         [HttpGet("{id:int}/{page:int?}")]
@@ -180,22 +185,37 @@ namespace En_Luna.Controllers
         [HttpGet("Apply/{solicitationId:int}/{contractorId:int}")]
         public IActionResult Apply(int solicitationId, int contractorId)
         {
-            return PartialView();
+            var contractor = _contractorService.Get(x => x.Id == contractorId);
+
+            var solicitationRole = _solicitationRoleService
+                .Get(x => 
+                    x.SolicitationId == solicitationId 
+                    && x.RequiredProfessionDisciplineId == contractor.ProfessionDisciplineId
+            );
+
+            if (solicitationRole == null)
+            {
+                return RedirectToAction("Search", new { contractorId });
+            }
+            
+            var application = _applicationService
+                .Get(x => x.SolicitationRoleId == solicitationRole.Id && x.ContractorId == contractorId)
+                ?? new Application
+                {
+                    ContractorId = contractorId,
+                    SolicitationRoleId = solicitationRole.Id,
+                };
+
+            ApplicationViewModel model = _mapper.Map<ApplicationViewModel>(application);
+
+            return PartialView(model);
         }
 
-
         [HttpPost("Apply")]
-        public JsonResult Apply(int id)
+        public JsonResult Apply(ApplicationViewModel model)
         {
-            var contractor = _contractorService.Get(x => x.Id == id);
-
-            if (contractor == null)
-            {
-                return Json(false);
-            }
-
-            // todo need to have the soliciation id so we know
-            // then we need to save application data to new table
+            var application = _mapper.Map<Application>(model);
+            _applicationService.Create(application);
 
             var message = new Message(_toAddresses,
                 "Application Received",

@@ -9,7 +9,8 @@ namespace En_Luna.Extensions
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>(); // todo don't know if we even need this service.
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IApplicationService, ApplicationService>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IBankAccountService, BankAccountService>();
             services.AddScoped<ICompanyTypeService, CompanyTypeService>();

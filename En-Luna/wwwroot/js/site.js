@@ -1,10 +1,9 @@
-﻿function modalPopup(editUrl, itemId) {
+﻿function modalPopup(editUrl) {
     var options = { "backdrop": "static", keyboard: true };
     $.ajax({
         type: "GET",
         url: editUrl,
         contentType: "application/json; charset=utf-8",
-        data: { "Id": itemId },
         datatype: "json",
         success: function (data) {
             $('#myModalContent').html(data);
@@ -66,10 +65,27 @@ function ajaxPost(targetUrl, targetId, elem) {
     });
 }
 
-function sendApplication(userId) {
-    ajaxPost('/Solicitations/Apply', userId);
+function sendApplication(solicitationRoleId, contractorId) {
+    var applicationModel = {
+        SolicitationRoleId: solicitationRoleId,
+        ContractorId: contractorId
+    };
 
-    $('#myModal').modal('hide');
+    $.ajax({
+        method: "POST",
+        data: {
+            SolicitationRoleId: solicitationRoleId,
+            ContractorId: contractorId
+        },
+        url: '/Solicitations/Apply',
+        success: function (response) {
+            $('#successful-toast').toast('show');
+            $('#myModal').modal('hide');
+        },
+        error: function (response) {
+            $('#failed-toast').toast('show');
+        }
+    });
 }
 
 $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {

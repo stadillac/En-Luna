@@ -11,6 +11,7 @@ namespace En_Luna.Data
         #region DbSets
 
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Application> Applications { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
         public DbSet<Contractor> Contractors { get; set; }
